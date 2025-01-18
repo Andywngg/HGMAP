@@ -129,7 +129,7 @@ const TeamDetails = () => {
           <section>
             <h2 className="text-2xl font-semibold text-red-500 mb-4">Robot Image</h2>
             <img 
-              src={endpoints.uploads.getUrl(teamData.imageUrl)} 
+              src={`${endpoints.teams.list.replace('/api/teams', '')}/storage${teamData.imageUrl.replace('/uploads', '')}`}
               alt={`Team ${teamData.teamNumber} Robot`}
               className="max-w-full h-auto rounded-lg shadow-lg"
             />

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from '../components/Table';
 import Button from '../components/Button';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import endpoints from '../config/api';
+import { teamService } from '../services/api';
 
 interface ScoutingData {
   teamNumber: number;
@@ -51,8 +51,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get(endpoints.teams.list);
-        setTeams(response.data);
+        const teams = await teamService.getAllTeams();
+        setTeams(teams as unknown as ScoutingData[]);
       } catch (error: any) {
         console.error('Error fetching teams:', error);
         toast.error(error.response?.data?.error || 'Failed to load teams');
@@ -129,12 +129,12 @@ const Dashboard = () => {
       header: 'Robot Image',
       render: (value: string) => value ? (
         <img 
-          src={endpoints.uploads.getUrl(value)} 
+          src={`${endpoints.teams.list.replace('/api/teams', '')}/storage${value.replace('/uploads', '')}`}
           alt="Robot" 
           className="w-16 h-16 object-cover rounded cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
-            window.open(endpoints.uploads.getUrl(value), '_blank');
+            window.open(`${endpoints.teams.list.replace('/api/teams', '')}/storage${value.replace('/uploads', '')}`, '_blank');
           }}
         />
       ) : null,

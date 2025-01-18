@@ -28,9 +28,9 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Serve static files from the uploads directory
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/storage', express.static(uploadsDir));
 
-// Routes
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/teams', teamRoutes);
 

@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import endpoints from '../config/api';
 import { FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { teamService } from '../services/api';
 
 interface ScoutingFormValues {
   teamNumber: string;
@@ -46,31 +47,29 @@ const ScoutingSchema = Yup.object().shape({
     .positive('Must be a positive number')
     .integer('Must be an integer'),
   autoStartingPosition: Yup.string().when('mustStartSpecificPosition', ([value]) => {
-    return value ? Yup.string().required('Please specify the starting position') : Yup.string();
+    return value ? Yup.string() : Yup.string();
   }),
-  teleopPreference: Yup.string().required('Required'),
+  teleopPreference: Yup.string(),
   scoringPreference: Yup.string().when('teleopPreference', ([value]) => {
-    return value === 'both' ? Yup.string().required('Required when scoring both') : Yup.string().nullable();
+    return value === 'both' ? Yup.string() : Yup.string().nullable();
   }),
   coralLevels: Yup.array().of(Yup.string()),
-  endgameType: Yup.string().required('Required'),
+  endgameType: Yup.string(),
   robotWidth: Yup.number()
-    .required('Width is required')
-    .positive('Must be positive'),
+    .nullable()
+    .transform((value) => (isNaN(value) ? null : value)),
   robotLength: Yup.number()
-    .required('Length is required')
-    .positive('Must be positive'),
+    .nullable()
+    .transform((value) => (isNaN(value) ? null : value)),
   robotHeight: Yup.number()
-    .required('Height is required')
-    .positive('Must be positive'),
+    .nullable()
+    .transform((value) => (isNaN(value) ? null : value)),
   robotWeight: Yup.number()
-    .required('Weight is required')
-    .positive('Must be positive'),
-  drivetrainType: Yup.string()
-    .required('Drivetrain type is required'),
-  robotImage: Yup.mixed().when('hasRobotImage', ([value]) => {
-    return value ? Yup.mixed().required('Please upload an image') : Yup.mixed();
-  }),
+    .nullable()
+    .transform((value) => (isNaN(value) ? null : value)),
+  drivetrainType: Yup.string(),
+  robotImage: Yup.mixed().nullable(),
+  hasRobotImage: Yup.boolean()
 });
 
 const fadeIn = {
@@ -115,14 +114,16 @@ const ScoutingForm = () => {
           formData.append(key, value);
         } else if (key === 'coralLevels' && Array.isArray(value)) {
           formData.append(key, JSON.stringify(value));
-        } else {
+        } else if (key !== 'robotImage' || value !== null) { // Only append non-null values
           formData.append(key, String(value));
         }
       });
 
+      const token = localStorage.getItem('token');
       const response = await axios.post(endpoints.teams.create, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
         },
       });
 

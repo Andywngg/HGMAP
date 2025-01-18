@@ -1,55 +1,62 @@
 import axios from 'axios';
-
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
-const STORAGE_URL = process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5001';
+import endpoints from '../config/api';
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: endpoints.teams.list.replace('/api/teams', ''),
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+// Add request interceptor to include auth token
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
 });
 
 export interface TeamData {
   teamNumber: number;
   autoScoreCoral: boolean;
   autoScoreAlgae: boolean;
+  mustStartSpecificPosition: boolean;
   autoStartingPosition: string;
-  teleopCoralCapability: number;
-  teleopAlgaeCapability: number;
   teleopDealgifying: boolean;
-  teleopCoralLevels: string[];
-  endgameDeepPerformance: number;
-  endgameShallowPerformance: number;
-  endgameClimbing: boolean;
+  teleopPreference: string;
+  scoringPreference: string;
+  coralLevels: string[];
+  endgameType: string;
   robotWidth: number;
   robotLength: number;
   robotHeight: number;
   robotWeight: number;
   drivetrainType: string;
-  notes: string;
-  updatedAt: string;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 export const getImageUrl = (path: string) => {
   if (!path) return '';
-  return path.startsWith('http') ? path : `${STORAGE_URL}${path}`;
+  if (path.startsWith('http')) return path;
+  return `${endpoints.teams.list.replace('/api/teams', '')}/storage${path.replace('/uploads', '')}`;
 };
 
 export const teamService = {
   getTeam: async (teamNumber: number): Promise<TeamData> => {
-    const response = await api.get(`/teams/${teamNumber}`);
+    const response = await api.get(`/api/teams/${teamNumber}`);
     return response.data;
   },
 
   updateTeam: async (teamNumber: number, data: Partial<TeamData>): Promise<TeamData> => {
-    const response = await api.put(`/teams/${teamNumber}`, data);
+    const response = await api.put(`/api/teams/${teamNumber}`, data);
     return response.data;
   },
 
   getAllTeams: async (): Promise<TeamData[]> => {
-    const response = await api.get('/teams');
+    const response = await api.get('/api/teams');
     return response.data;
   },
 }; 
