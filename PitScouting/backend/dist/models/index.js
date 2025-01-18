@@ -8,8 +8,8 @@ const sequelize_1 = require("sequelize");
 const config_1 = __importDefault(require("../config/config"));
 const user_1 = require("./user");
 Object.defineProperty(exports, "User", { enumerable: true, get: function () { return user_1.User; } });
-const team_1 = require("./team");
-Object.defineProperty(exports, "Team", { enumerable: true, get: function () { return team_1.Team; } });
+const team_1 = __importDefault(require("./team"));
+exports.Team = team_1.default;
 const env = process.env.NODE_ENV || 'development';
 const dbConfig = config_1.default[env];
 let sequelize;
@@ -24,5 +24,5 @@ else {
     exports.sequelize = sequelize = new sequelize_1.Sequelize(config.database, config.username, config.password, Object.assign(Object.assign({}, dbConfig), { dialect: 'postgres' }));
 }
 user_1.User.initialize(sequelize);
-team_1.Team.initialize(sequelize);
+team_1.default.initialize(sequelize);
 //# sourceMappingURL=index.js.map
