@@ -1,0 +1,14 @@
+feature,importance
+gmwi2,0.334509448805693
+gmwi,0.1945139010004677
+gmwi_ratio,0.08831334640662954
+diversity_ratio_log,0.044286310925364454
+diversity_ratio,0.04378067370056358
+richness_shannon_ratio_log,0.039778448994080215
+richness_shannon_ratio,0.039554745377626495
+simpson_diversity,0.038712956122242244
+shannon_diversity,0.03753937440489015
+shannon_diversity_log,0.03654921255280566
+simpson_diversity_log,0.03582590998798489
+species_richness_log,0.03383242711653644
+species_richness,0.03280324460511561

@@ -1,0 +1,60 @@
+supplementary_data_1._human_stool_shotgun_metagenome_datasets_utilized_in_this_study.,unnamed:_1,unnamed:_2,unnamed:_3,unnamed:_4,unnamed:_5,unnamed:_6,unnamed:_7,unnamed:_8,unnamed:_9,unnamed:_10
+Author (Last name),Publication year,Publication title,Journal,Total number of samples (n),Total number of samples from healthy individuals (n),Total number of samples from non-healthy individuals (n),Sequencing platform,Library layout (PESE)b,Geography (Country),Disease (Sample #)c
+,,,,,,,,,,
+Ananthakrishnan,2017,Gut Microbiome Function Predicts Response to Anti-integrin Biologic Therapy in Inflammatory Bowel Diseases,Cell Host & Microbe,64,0,64,Illumina NextSeq 500,SE,United States,"CD (24), UC (40)"
+Ang,2021,Differences in the Gut Microbiomes of Distinct Ethnicities Within the Same Geographic Area Are Linked to Host Metabolic Health,eLife,22,22,0,Illumina NovaSeq 6000,PE,United States,–
+Asnicar,2021,"Microbiome connections with host metabolism and habitual diet from 1,098 deeply phenotyped individuals",Nature Medicine,568,568,0,Illumina NovaSeq 6000,PE,United KingdomUnited States,–
+Backhed,2015,Dynamics and Stabilization of the Human Gut Microbiome during the First Year of Life,Cell Host & Microbe,100,100,0,Illumina HiSeq 2000,PE,Denmark,–
+Costea,2017,Subspecies in the global human gut microbiome,Molecular Systems Biology,169,169,0,Illumina HiSeq 2000,PE,GermanyKazakhstan,–
+D’Souza,2021,"Destination shapes antibiotic resistance gene acquisitions, abundance increases, and diversity changes in Dutch travelers",Genome Medicine,128,128,0,Illumina NextSeq 500,PE,Netherlands,–
+Davies,2020,Gut Microbial Predictors of Type 2 Diabetes Remission Following Bariatric Surgery,Obesity Surgery,44,0,44,Illumina HiSeq 2000,PE,New Zealand,T2D (44)
+De Filippis,2019,Distinct Genetic and Functional Traits of Human Intestinal Prevotella copri Strains Are Associated with Different Habitual Diets,Cell Host & Microbe,99,99,0,Illumina HiSeq 1500Illumina NextSeq 500,PESE,Italy,–
+Dhakan,2019,"The unique composition of Indian gut microbiome, gene catalogue, and associated fecal metabolome deciphered using multi-omics approaches",Giga Science,47,47,0,Illumina NextSeq 500,PE,India,–
+Feng,2015,Gut microbiome development along the colorectal adenoma–carcinoma sequence,Nature communications,46,0,46,Illumina HiSeq 2000,PE,Austria,CRC (46)
+Franzosa,2018,Gut microbiome structure and metabolic activity in inflammatory bowel disease,Nature Microbiology,213,56,157,Illumina HiSeq 2000,PE,NetherlandsUnited States,"CD (84), UC (73)"
+Gu,2017,Analyses of gut microbiota and plasma bile acids enable stratification of patients for antidiabetic treatment,Nature Communications,94,0,94,Illumina HiSeq 2500,PE,China,T2D (94)
+Gupta,2020,A predictive index for health status using species-level gut microbiome profiling,Nature communications,49,0,49,Illumina HiSeq 4000,PE,United States,RA (49)
+He,2017,Two distinct metacommunities characterize the gut microbiota in Crohn's disease patients,Gigascience,86,40,46,Illumina HiSeq 2000,PE,China,CD (46)
+Huttenhower; Lloyd-Pricea,2012; 2017,"Structure, function and diversity of the healthy human microbiome; Strains, functions and dynamics in the expanded Human Microbiome Project",Nature; Nature,507,507,0,Illumina HiSeq 2000Illumina Genome Analyzer II,PE,United States,–
+Jacobson,2021,Analysis of global human gut metagenomes shows that metabolic resilience potential for short-chain fatty acid production is strongly influenced by lifestyle,Scientific Reports,82,82,0,Illumina NovaSeq 6000,PE,Burkina Faso,–
+Jie,2017,The gut microbiome in atherosclerotic cardiovascular disease,Nature communications,322,108,214,Illumina HiSeq 2000,PE,China,ACVD (214)
+Karlsson,2013,"Gut metagenome in European women with normal, impaired and diabetic glucose control",Nature,53,0,53,Illumina HiSeq 2000,PE,Sweden,T2D (53)
+Kim,2021,"High fecal carriage of blaCTX-M, blaCMY-2, and plasmid-mediated quinolone resistance genes among healthy Korean people in a metagenomic analysis",Scientific Reports,61,61,0,Illumina HiSeq 4000,PE,South Korea,–
+Le Chatelier,2013,Richness of human gut microbiome correlates with metabolic markers,Nature,88,88,0,Illumina HiSeq 2000Illumina Genome Analyzer IIIllumina Genome Analyzer IIx,PE,Denmark,–
+Liu,2016,Unique Features of Ethnic Mongolian Gut Microbiome revealed by metagenomic analysis,Scientific Reports,110,110,0,Illumina HiSeq 4000,PE,ChinaMongolia,–
+Lloyd-Price,2019,Multi-omics of the gut microbial ecosystem in inflammatory bowel diseases,Nature,86,25,61,Illumina HiSeq 2000,PE,United States,"CD (39), UC (22)"
+Lokmer,2019,Use of shotgun metagenomics for the identification of protozoa in the gut microbiota of healthy individuals from worldwide populations with various industrialization levels,PLoS One,37,37,0,Illumina HiSeq 2000,PE,Cameroon,–
+Loomba,2017,Gut Microbiome-Based Metagenomic Signature for Non-invasive Detection of Advanced Fibrosis in Human Nonalcoholic Fatty Liver Disease,Cell Metabolism,86,0,86,Illumina HiSeq 2500,PE,United States,NAFLD (86)
+Mehta,2018,Stability of the human faecal microbiome in a cohort of adult men,Nature Microbiology,301,301,0,Illumina HiSeq 2000,PE,United States,–
+Nielsen,2014,Identification and assembly of genomes and genetic elements in complex metagenomic samples without using reference genomes,Nature Biotechnology,159,82,77,Illumina HiSeq 2000Illumina Genome Analyzer IIIllumina Genome Analyzer IIx,PE,DenmarkSpain,"CD (12), UC (65)"
+Obregon-Tito,2015,Subsistence strategies in traditional societies distinguish gut microbiomes,Nature communications,20,20,0,Illumina HiSeq 2500,PE,PeruUnited States,–
+Pasolli,2019,"Extensive Unexplored Human Microbiome Diversity Revealed by Over 150,000 Genomes from Metagenomes Spanning Age, Geography, and Lifestyle",Cell,142,142,0,Illumina HiSeq 2500,PE,EthiopiaMadagascar,–
+Qi,2019,Gut microbiota–bile acid–interleukin-22 axis orchestrates polycystic ovary syndrome,Nature Medicine,43,43,0,Illumina HiSeq 2500,PE,China,–
+Qin,2012,A metagenome-wide association study of gut microbiota in type 2 diabetes,Nature,369,183,186,Illumina Genome Analyzer II,PE,China,T2D (186)
+Qin,2014,Alterations of the human gut microbiome in liver cirrhosis,Nature,287,135,152,Illumina HiSeq 2000,PE,China,LC (152)
+Rettedal,2021,The Gut Microbiome Is Altered in Postmenopausal Women With Osteoporosis and Osteopenia,Journal of Bone and Mineral Research,35,35,0,Illumina HiSeq 2500,PE,New Zealand,–
+Roager,2019,Whole grain-rich diet reduces body weight and systemic low-grade inflammation without inducing major changes of the gut microbiome a randomised cross-over trial,Gut,50,50,0,Illumina HiSeq 2000,PE,Denmark,–
+Schirmer,2016,Linking the Human Gut Microbiome to Inflammatory Cytokine Production Capacity,Cell,385,385,0,Illumina HiSeq 2000,PE,Netherlands,–
+Schirmer,2018,Dynamics of metatranscription in the inflammatory bowel disease gut microbiome,Nature Microbiology,83,18,65,Illumina HiSeq 2000,PE,United States,"CD (39), UC (26)"
+Smits,2017,Seasonal Cycling in the Gut Microbiome of the Hadza Hunter-Gatherers of Tanzania,Science,38,38,0,Illumina HiSeq 4000,SE,Tanzania,–
+Sun,2021,"On the robustness of inference of association with the gut microbiota in stool, swab and mucosal tissue samples",scientific reports,42,42,0,Illumina HiSeq 4000,PE,United States,–
+Tett,2019,The Prevotella copri Complex Comprises Four Distinct Clades Underrepresented in Westernized Populations,Cell Host & Microbe,110,110,0,Illumina HiSeq 2000Illumina HiSeq 2500,PE,TanzaniaGhana,–
+Thomas,2019,Metagenomic analysis of colorectal cancer datasets identifies cross-cohort microbial diagnostic signatures and a link with choline degradation,Nature Medicine,160,61,99,Illumina HiSeq 2500,PE,ItalyJapan,CRC (99)
+Ventura,2019,Gut microbiome of treatment-naïve MS patients of different ethnicities early in disease course,scientific reports,48,24,24,Illumina HiSeq 4000,PE,United States,MS (24)
+Vogtmann,2016,Colorectal Cancer and the Human Gut Microbiome Reproducibility with Whole-Genome Shotgun Sequencing,PLoS One,81,30,51,Illumina HiSeq 2000,PE,United States,CRC (51)
+Wen,2017,Quantitative metagenomics reveals unique gut microbiome biomarkers in ankylosing spondylitis,Genome Biology,200,105,95,Illumina HiSeq 2000,PE,China,AS (95)
+Weng,2019,"Correlation of diet, microbiota and metabolite networks in inflammatory bowel disease",Journal of Digestive Disease,79,15,64,Illumina HiSeq X Ten,PE,China,"CD (40), UC (24)"
+Wirbel,2019,Meta-analysis of fecal metagenomes reveals global microbial signatures that are specific for colorectal cancer,Nature Medicine,55,33,22,Illumina HiSeq 4000,PE,Germany,CRC (22)
+Xie,2016,Shotgun Metagenomics of 250 Adult Twins Reveals Genetic and Environmental Impacts on the Gut Microbiome,Cell Systems,130,130,0,Illumina HiSeq 2000,PE,United Kingdom,–
+Yachida,2019,Metagenomic and metabolomic analyses reveal distinct stage-specific phenotypes of the gut microbiota in colorectal cancer,Nature Medicine,217,0,217,Illumina HiSeq 2500,PE,Japan,CRC (217)
+Yang,2020,Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families,Gut Microbes,180,88,92,Illumina HiSeq X Ten,PE,China,CRC (92)
+Yang,2021,Dysbiosis of human gut microbiome in young-onset colorectal cancer,Nature communications,194,97,97,Illumina NovaSeq 6000,PE,China,CRC (97)
+Yassour,2018,Strain-level analysis of mother-to-child bacterial transmission during the first few months of life,Cell Host & Microbe,42,42,0,Illumina HiSeq 2500,PE,Finland,–
+Yu,2015,Metagenomic analysis of faecal microbiome as a tool towards targeted non-invasive biomarkers for colorectal cancer,Gut,128,53,75,Illumina HiSeq 2000,PE,China,CRC (75)
+Zeevi,2015,Personalized Nutrition by Prediction of Glycemic Responses,Cell,900,900,0,Illumina HiSeq 2500Illumina HiSeq 2500Illumina MiSeq,PESE,Israel,–
+Zeller,2014,Potential of fecal microbiota for early-stage detection of colorectal cancer,Mol Syst Biol,135,45,90,Illumina HiSeq 2000,PE,FranceGermany,CRC (90)
+Zhang,2015,The oral and gut microbiomes are perturbed in rheumatoid arthritis and partly normalized after treatment,Nature Medicine,163,61,102,Illumina HiSeq 2000,PE,China,RA (102)
+Zhu,2021,Compositional and genetic alterations in Graves’ disease gut microbiome reveal specific diagnostic biomarkers,ISME,132,32,100,Illumina HiSeq 4000,PE,China,GD (100)
+aSamples combined from both phases of the Human Microbiome Project (HMP1 and HMP1-II).,,,,,,,,,,
+"bPE Paired-end, SE Single-end.",,,,,,,,,,
+"cACVD atherosclerotic cardiovascular disease, AS ankylosing spondylitis, CRC colorectal cancer, CD Crohn’s disease, GD Graves’ disease, LC liver cirrhosis, MS multiple sclerosis, NAFLD nonalcoholic fatty liver disease, RA rheumatoid arthritis, T2D type 2 diabetes, UC ulcerative colitis.",,,,,,,,,,

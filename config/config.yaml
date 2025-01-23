@@ -1,0 +1,83 @@
+data:
+  raw_data_path: "data/raw"
+  processed_data_path: "data/processed"
+  abundance_file: "abundance.csv"
+  metadata_file: "metadata.csv"
+  test_size: 0.2
+  random_state: 42
+
+preprocessing:
+  min_prevalence: 0.1
+  min_abundance: 0.001
+  normalize: true
+  scale: true
+
+feature_engineering:
+  use_metadata: true
+  diversity_metrics: true
+  interaction_terms: true
+  pca_components: 50
+
+model:
+  type: "stacking"
+  base_models:
+    - name: "random_forest"
+      params:
+        n_estimators: 500
+        max_depth: 20
+        min_samples_split: 5
+    - name: "gradient_boosting"
+      params:
+        n_estimators: 300
+        learning_rate: 0.1
+        max_depth: 10
+    - name: "xgboost"
+      params:
+        n_estimators: 400
+        learning_rate: 0.05
+        max_depth: 8
+  meta_model:
+    name: "logistic_regression"
+    params:
+      C: 1.0
+      max_iter: 1000
+
+training:
+  batch_size: 32
+  epochs: 100
+  early_stopping_patience: 10
+  learning_rate: 0.001
+  validation_split: 0.2
+
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+  cross_validation_folds: 5
+
+interpretation:
+  shap_samples: 100
+  feature_importance_top_k: 20
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  timeout: 60
+  cors_origins:
+    - "*"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/app.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5
+
+monitoring:
+  enable_prometheus: true
+  enable_health_check: true
+  metrics_port: 9090 
