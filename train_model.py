@@ -112,67 +112,67 @@ class MicrobiomeModelTrainer:
             smote = SMOTE(random_state=42, k_neighbors=7)
             X_train_balanced, y_train_balanced = smote.fit_resample(X_train_scaled, y_train)
             
-            # Enhanced parameter grids for tuning
+            # Optimized parameter grids for faster training
             rf_params = {
-                'n_estimators': [100, 200, 300],
-                'max_depth': [10, 15, 20],
-                'min_samples_split': [5, 10, 15],
-                'min_samples_leaf': [2, 4, 6],
-                'max_features': ['sqrt', 'log2'],
-                'bootstrap': [True, False]
+                'n_estimators': [200],
+                'max_depth': [15],
+                'min_samples_split': [5],
+                'min_samples_leaf': [2],
+                'max_features': ['sqrt']
             }
             
             gb_params = {
-                'n_estimators': [100, 200, 300],
-                'max_depth': [5, 7, 9],
-                'learning_rate': [0.01, 0.05, 0.1],
-                'subsample': [0.8, 0.9, 1.0],
-                'min_samples_split': [5, 10],
-                'min_samples_leaf': [2, 4]
+                'n_estimators': [200],
+                'max_depth': [5],
+                'learning_rate': [0.05],
+                'subsample': [0.8],
+                'min_samples_split': [5]
             }
             
             ada_params = {
-                'n_estimators': [50, 100, 150],
-                'learning_rate': [0.5, 1.0, 1.5],
-                'algorithm': ['SAMME', 'SAMME.R']
+                'n_estimators': [100],
+                'learning_rate': [1.0],
+                'algorithm': ['SAMME']
             }
             
-            # Initialize and tune base models with more cross-validation folds
-            logging.info("Tuning Random Forest...")
-            rf = GridSearchCV(
-                RandomForestClassifier(random_state=42),
-                rf_params,
-                cv=10,
+            # Initialize and tune base models with parallel processing
+            logging.info("Training Random Forest...")
+            rf = RandomForestClassifier(
+                n_estimators=200,
+                max_depth=15,
+                min_samples_split=5,
+                min_samples_leaf=2,
+                max_features='sqrt',
                 n_jobs=-1,
-                scoring='balanced_accuracy'
+                random_state=42
             )
             rf.fit(X_train_balanced, y_train_balanced)
             
-            logging.info("Tuning Gradient Boosting...")
-            gb = GridSearchCV(
-                GradientBoostingClassifier(random_state=42),
-                gb_params,
-                cv=10,
-                n_jobs=-1,
-                scoring='balanced_accuracy'
+            logging.info("Training Gradient Boosting...")
+            gb = GradientBoostingClassifier(
+                n_estimators=200,
+                max_depth=5,
+                learning_rate=0.05,
+                subsample=0.8,
+                min_samples_split=5,
+                random_state=42
             )
             gb.fit(X_train_balanced, y_train_balanced)
             
-            logging.info("Tuning AdaBoost...")
-            ada = GridSearchCV(
-                AdaBoostClassifier(random_state=42),
-                ada_params,
-                cv=10,
-                n_jobs=-1,
-                scoring='balanced_accuracy'
+            logging.info("Training AdaBoost...")
+            ada = AdaBoostClassifier(
+                n_estimators=100,
+                learning_rate=1.0,
+                algorithm='SAMME',
+                random_state=42
             )
             ada.fit(X_train_balanced, y_train_balanced)
             
             # Create weighted voting ensemble
             estimators = [
-                ('rf', rf.best_estimator_),
-                ('gb', gb.best_estimator_),
-                ('ada', ada.best_estimator_)
+                ('rf', rf),
+                ('gb', gb),
+                ('ada', ada)
             ]
             
             # Enhanced stacking with better meta-learner
@@ -184,7 +184,7 @@ class MicrobiomeModelTrainer:
                     max_depth=3,
                     random_state=42
                 ),
-                cv=10,
+                cv=5,
                 n_jobs=-1
             )
             
@@ -192,9 +192,9 @@ class MicrobiomeModelTrainer:
             stacking.fit(X_train_balanced, y_train_balanced)
             
             # Save models and scaler
-            joblib.dump(rf.best_estimator_, self.models_dir / "random_forest_model.joblib")
-            joblib.dump(gb.best_estimator_, self.models_dir / "gradient_boosting_model.joblib")
-            joblib.dump(ada.best_estimator_, self.models_dir / "adaboost_model.joblib")
+            joblib.dump(rf, self.models_dir / "random_forest_model.joblib")
+            joblib.dump(gb, self.models_dir / "gradient_boosting_model.joblib")
+            joblib.dump(ada, self.models_dir / "adaboost_model.joblib")
             joblib.dump(stacking, self.models_dir / "stacking_model.joblib")
             joblib.dump(scaler, self.models_dir / "scaler.joblib")
             
@@ -204,8 +204,6 @@ class MicrobiomeModelTrainer:
                 y_prob = model.predict_proba(X_test)
                 
                 logging.info(f"\n{name} Performance:")
-                if hasattr(model, 'best_params_'):
-                    logging.info(f"Best params: {model.best_params_}")
                 logging.info(classification_report(y_test, y_pred))
                 logging.info(f"Confusion Matrix:\n{confusion_matrix(y_test, y_pred)}")
                 
@@ -226,7 +224,7 @@ class MicrobiomeModelTrainer:
             stack_pred, stack_prob = evaluate_model("Stacking Classifier", stacking, X_test_scaled, y_test)
             
             # Feature importance analysis with confidence intervals
-            n_iterations = 100
+            n_iterations = 50  # Reduced from 100 for faster processing
             importances = np.zeros((n_iterations, len(self.feature_names)))
             
             for i in range(n_iterations):
@@ -236,7 +234,15 @@ class MicrobiomeModelTrainer:
                 y_boot = y_train_balanced[indices]
                 
                 # Train a new random forest
-                rf_boot = RandomForestClassifier(**rf.best_params_, random_state=i)
+                rf_boot = RandomForestClassifier(
+                    n_estimators=200,
+                    max_depth=15,
+                    min_samples_split=5,
+                    min_samples_leaf=2,
+                    max_features='sqrt',
+                    n_jobs=-1,
+                    random_state=i
+                )
                 rf_boot.fit(X_boot, y_boot)
                 importances[i, :] = rf_boot.feature_importances_
             

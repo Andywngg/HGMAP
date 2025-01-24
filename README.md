@@ -1,24 +1,25 @@
 # AI-Based Microbiome Analysis for Disease Detection
 
-## Overview
-This project develops an AI-powered system for analyzing microbiome data to detect early signs of disease. It leverages datasets from the American Gut Project and Human Microbiome Project to train machine learning models that can identify correlations between gut microbiota composition and health conditions.
+A comprehensive platform for analyzing microbiome data using advanced machine learning techniques to predict health outcomes and detect early-stage diseases.
 
 ## Features
-- Advanced microbiome data preprocessing and feature engineering
-- Ensemble machine learning models (Random Forest, Gradient Boosting, StackingClassifier)
-- Model interpretability using SHAP values
-- RESTful API for real-time analysis
-- Comprehensive testing suite
-- Containerized deployment
 
-## Setup
+- Advanced ensemble machine learning pipeline
+- Support for multiple microbiome datasets (American Gut Project, HMP)
+- Sophisticated data preprocessing and feature engineering
+- Model interpretability using SHAP values
+- RESTful API for real-time predictions
+- Comprehensive testing suite
+
+## Installation
+
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/microbiome-analysis.git
 cd microbiome-analysis
 ```
 
-2. Create a virtual environment:
+2. Create a virtual environment and activate it:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -30,54 +31,131 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+
 ### Data Processing
-```bash
-python src/main.py process-data --input-dir data/raw --output-dir data/processed
+
+```python
+from src.data.processor import MicrobiomeDataProcessor
+
+# Initialize processor
+processor = MicrobiomeDataProcessor()
+
+# Load and process American Gut Project data
+abundances, metadata = processor.load_american_gut("path/to/american_gut_data")
+
+# Load and process HMP data
+hmp_abundances, hmp_metadata = processor.load_hmp("path/to/hmp_data")
+
+# Combine datasets
+combined_data = processor.combine_datasets([
+    (abundances, metadata),
+    (hmp_abundances, hmp_metadata)
+])
 ```
 
 ### Model Training
-```bash
-python src/train_advanced.py --config config/training_config.yaml
+
+```python
+from src.model.advanced_ensemble import HyperEnsemble
+
+# Initialize and train model
+model = HyperEnsemble()
+model.fit(X_train, y_train)
+
+# Get predictions
+predictions = model.predict(X_test)
+
+# Get feature importance
+importance = model.get_feature_importance(X_test)
+
+# Get SHAP explanations
+explanations = model.explain_prediction(X_test)
 ```
 
-### API
+### API Usage
+
+Start the API server:
 ```bash
 uvicorn src.api.main:app --reload
 ```
 
-## Project Structure
-```
-├── config/              # Configuration files
-├── data/               # Data directory
-│   ├── raw/           # Raw data
-│   └── processed/     # Processed data
-├── src/               # Source code
-│   ├── api/          # FastAPI implementation
-│   ├── features/     # Feature engineering
-│   ├── model/        # ML models
-│   └── utils/        # Utility functions
-├── tests/            # Test suite
-├── deploy/           # Deployment configurations
-└── notebooks/        # Jupyter notebooks
+Make predictions:
+```python
+import requests
+
+data = {
+    "taxa_abundances": {
+        "feature_1": 0.3,
+        "feature_2": 0.2,
+        # ...
+    },
+    "metadata": {
+        "age": 45,
+        "sex": "M",
+        "bmi": 24.5
+    }
+}
+
+response = requests.post("http://localhost:8000/predict", json=data)
+prediction = response.json()
 ```
 
-## API Documentation
-The API is available at `http://localhost:8000` when running locally.
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+## Project Structure
+
+```
+├── src/
+│   ├── api/              # FastAPI implementation
+│   ├── data/             # Data processing modules
+│   ├── features/         # Feature engineering
+│   ├── model/           # ML models
+│   └── utils/           # Utility functions
+├── tests/               # Test suite
+├── config/             # Configuration files
+├── notebooks/          # Jupyter notebooks
+└── reports/           # Analysis reports
+```
 
 ## Testing
-Run tests with:
+
+Run the test suite:
 ```bash
 pytest tests/
 ```
 
+## Docker Deployment
+
+Build the Docker image:
+```bash
+docker build -t microbiome-analysis .
+```
+
+Run the container:
+```bash
+docker run -p 8000:8000 microbiome-analysis
+```
+
 ## Contributing
+
 1. Fork the repository
 2. Create a feature branch
-3. Commit changes
+3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
 
 ## License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Citation
+
+If you use this software in your research, please cite:
+
+```bibtex
+@software{microbiome_analysis,
+    title = {AI-Based Microbiome Analysis},
+    author = {Your Name},
+    year = {2024},
+    version = {1.0.0},
+    url = {https://github.com/yourusername/microbiome-analysis}
+}
+```

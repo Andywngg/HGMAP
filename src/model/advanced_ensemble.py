@@ -146,4 +146,55 @@ class HyperEnsemble:
             # Simple average
             final_pred = np.mean(np.concatenate([base_preds, boost_preds], axis=1), axis=1)
         
-        return np.column_stack((1 - final_pred, final_pred)) 
+        return np.column_stack((1 - final_pred, final_pred))
+
+    def explain_prediction(self, X: np.ndarray, sample_idx: int = None) -> Dict:
+        """Generate SHAP explanations for predictions"""
+        import shap
+        
+        explanations = {}
+        
+        # Explain base models
+        for i, model in enumerate(self.base_models):
+            if hasattr(model, 'predict_proba'):
+                explainer = shap.TreeExplainer(model)
+                shap_values = explainer.shap_values(X)
+                if isinstance(shap_values, list):
+                    shap_values = shap_values[1]  # For binary classification, take positive class
+                explanations[f'base_model_{i}'] = {
+                    'shap_values': shap_values,
+                    'expected_value': explainer.expected_value if isinstance(explainer.expected_value, float) 
+                                    else explainer.expected_value[1]
+                }
+        
+        # Explain boosting models
+        for name, model in self.boosting_models.items():
+            explainer = shap.TreeExplainer(model)
+            shap_values = explainer.shap_values(X)
+            if isinstance(shap_values, list):
+                shap_values = shap_values[1]
+            explanations[name] = {
+                'shap_values': shap_values,
+                'expected_value': explainer.expected_value if isinstance(explainer.expected_value, float) 
+                                else explainer.expected_value[1]
+            }
+        
+        # If sample_idx is provided, return explanation for specific sample
+        if sample_idx is not None:
+            for model_name in explanations:
+                explanations[model_name]['shap_values'] = \
+                    explanations[model_name]['shap_values'][sample_idx]
+        
+        return explanations
+
+    def get_feature_importance(self, X: np.ndarray) -> Dict[str, np.ndarray]:
+        """Get global feature importance using SHAP values"""
+        explanations = self.explain_prediction(X)
+        
+        feature_importance = {}
+        for model_name, explanation in explanations.items():
+            # Calculate mean absolute SHAP values for each feature
+            importance = np.abs(explanation['shap_values']).mean(axis=0)
+            feature_importance[model_name] = importance
+            
+        return feature_importance 
