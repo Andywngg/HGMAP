@@ -7,6 +7,7 @@ from pathlib import Path
 import joblib
 import sys
 import logging
+import shap
 
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
@@ -19,35 +20,45 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
-    title="Microbiome Analysis API",
-    description="API for microbiome-based disease detection",
+    title="Microbiome Health Classifier API",
+    description="API for predicting health status from microbiome data",
     version="1.0.0"
 )
 
 class MicrobiomeData(BaseModel):
-    """Input data model for microbiome analysis"""
-    taxa_abundances: Dict[str, float]
-    metadata: Optional[Dict[str, str]] = None
+    """Pydantic model for input data validation."""
+    abundances: Dict[str, float]
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "abundances": {
+                    "Bacteroides": 0.25,
+                    "Prevotella": 0.15,
+                    "Faecalibacterium": 0.1,
+                    "Roseburia": 0.05
+                }
+            }
+        }
 
 class PredictionResponse(BaseModel):
-    """Response model for predictions"""
-    prediction: str
+    """Pydantic model for prediction response."""
+    prediction: int
     probability: float
-    confidence_score: float
-    important_features: List[Dict[str, float]]
+    feature_importance: Dict[str, float]
+    prediction_explanation: str
 
 # Load model and feature engineer
 MODEL_PATH = Path("models/ensemble_model.joblib")
-FEATURE_ENGINEER_PATH = Path("models/feature_engineer.joblib")
+FEATURE_NAMES_PATH = Path("models/feature_names.joblib")
 
 try:
     model = joblib.load(MODEL_PATH)
-    feature_engineer = joblib.load(FEATURE_ENGINEER_PATH)
-    logger.info("Model and feature engineer loaded successfully")
+    feature_names = joblib.load(FEATURE_NAMES_PATH)
+    logger.info("Model and feature names loaded successfully")
 except Exception as e:
-    logger.error(f"Error loading model or feature engineer: {e}")
-    model = None
-    feature_engineer = None
+    logger.error(f"Error loading model or feature names: {str(e)}")
+    raise
 
 @app.get("/")
 async def root():
@@ -56,54 +67,91 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    if model is None or feature_engineer is None:
-        raise HTTPException(status_code=503, detail="Model or feature engineer not loaded")
-    return {"status": "healthy"}
+    """Health check endpoint."""
+    return {"status": "healthy", "model_loaded": model is not None}
+
+def validate_input_features(data: Dict[str, float]) -> pd.DataFrame:
+    """Validate and prepare input features."""
+    try:
+        # Create DataFrame with all feature names
+        df = pd.DataFrame(0, index=[0], columns=feature_names)
+        
+        # Fill in provided values
+        for feature, value in data.items():
+            if feature in feature_names:
+                df.loc[0, feature] = value
+            else:
+                logger.warning(f"Unknown feature {feature} will be ignored")
+        
+        return df
+        
+    except Exception as e:
+        logger.error(f"Error in input validation: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Invalid input format: {str(e)}")
+
+def get_feature_importance(model, input_data: pd.DataFrame) -> Dict[str, float]:
+    """Calculate SHAP values for feature importance."""
+    try:
+        explainer = shap.TreeExplainer(model)
+        shap_values = explainer.shap_values(input_data)
+        
+        if isinstance(shap_values, list):
+            shap_values = shap_values[1]  # For binary classification, use class 1
+            
+        importance_dict = dict(zip(feature_names, abs(shap_values[0])))
+        return dict(sorted(importance_dict.items(), key=lambda x: abs(x[1]), reverse=True)[:10])
+        
+    except Exception as e:
+        logger.error(f"Error calculating feature importance: {str(e)}")
+        return {}
+
+def generate_prediction_explanation(prediction: int, probability: float, top_features: Dict[str, float]) -> str:
+    """Generate a human-readable explanation of the prediction."""
+    health_status = "healthy" if prediction == 0 else "non-healthy"
+    confidence = probability if prediction == 1 else 1 - probability
+    
+    explanation = f"The microbiome profile suggests a {health_status} status with {confidence:.1%} confidence. "
+    
+    if top_features:
+        top_3_features = list(top_features.items())[:3]
+        explanation += "The most influential features were: "
+        explanation += ", ".join(f"{feature} (impact: {abs(value):.3f})" 
+                               for feature, value in top_3_features)
+    
+    return explanation
 
 @app.post("/predict", response_model=PredictionResponse)
 async def predict(data: MicrobiomeData):
-    """Make predictions based on microbiome data"""
+    """Endpoint for making predictions."""
     try:
-        # Convert input data to correct format
-        abundances = pd.Series(data.taxa_abundances)
-        
-        # Feature engineering
-        features = feature_engineer.transform(abundances.values.reshape(1, -1))
+        # Validate and prepare input
+        input_df = validate_input_features(data.abundances)
         
         # Make prediction
-        prediction = model.predict(features)[0]
-        probabilities = model.predict_proba(features)[0]
+        prediction = model.predict(input_df)[0]
+        probability = model.predict_proba(input_df)[0][1]
         
         # Get feature importance
-        importance = model.feature_importances_
-        feature_importance = [
-            {"feature": name, "importance": float(score)}
-            for name, score in zip(feature_engineer.feature_names_, importance)
-        ]
+        feature_importance = get_feature_importance(model, input_df)
         
-        # Calculate confidence score
-        confidence = float(max(probabilities))
+        # Generate explanation
+        explanation = generate_prediction_explanation(prediction, probability, feature_importance)
         
         return PredictionResponse(
-            prediction=str(prediction),
-            probability=float(probabilities[1]),
-            confidence_score=confidence,
-            important_features=sorted(feature_importance, key=lambda x: x["importance"], reverse=True)[:10]
+            prediction=int(prediction),
+            probability=float(probability),
+            feature_importance=feature_importance,
+            prediction_explanation=explanation
         )
-    
+        
     except Exception as e:
-        logger.error(f"Prediction error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error in prediction: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
-@app.get("/model/info")
-async def model_info():
-    """Get information about the current model"""
-    return {
-        "model_type": type(model).__name__,
-        "feature_count": len(feature_engineer.feature_names_),
-        "features": feature_engineer.feature_names_
-    }
+@app.get("/features")
+async def get_features():
+    """Get list of accepted features."""
+    return {"features": list(feature_names)}
 
 if __name__ == "__main__":
     import uvicorn

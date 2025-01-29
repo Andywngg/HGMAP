@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00005745",
+    "attributes": {
+      "accession": "MGYS00005745",
+      "samples-count": 114,
+      "bioproject": "PRJDB10581",
+      "is-private": false,
+      "last-update": "2021-06-07T19:57:51",
+      "secondary-accession": "DRP006831",
+      "centre-name": "Osaka city university graduate school of medicine",
+      "public-release-date": null,
+      "study-abstract": "Threatened preterm labor (TPL) and preterm birth (PTB) are significant obstetric complications during pregnancy. However, their triggers have not been fully elucidated. To identify the predisposing factors of TPL and PTB, this project analyzed the oral, vaginal, and rectal microbial profiles to identify potential inter-organ bacterial communication.",
+      "study-name": "Oral, vaginal, and intestinal microbiota analysis in pregnancy",
+      "data-origination": "HARVESTED"
+    },
+    "relationships": {
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745/samples"
+        }
+      },
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745/publications"
+        }
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745/geocoordinates"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745/downloads"
+        }
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745/studies"
+        },
+        "data": []
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Host-associated:Human",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Host-associated:Human"
+            }
+          }
+        ]
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005745"
+    }
+  }
+}

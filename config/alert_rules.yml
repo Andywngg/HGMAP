@@ -1,0 +1,87 @@
+groups:
+  - name: model_alerts
+    rules:
+      - alert: ModelAccuracyDrop
+        expr: model_accuracy_rolling_window < 0.90
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Model accuracy has dropped below threshold"
+          description: "Model accuracy is {{ $value }} which is below the 90% threshold"
+
+      - alert: HighPredictionLatency
+        expr: prediction_latency_seconds > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High prediction latency detected"
+          description: "Prediction latency is {{ $value }}s which is above the 0.5s threshold"
+
+      - alert: HighErrorRate
+        expr: rate(prediction_errors_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High prediction error rate detected"
+          description: "Error rate is {{ $value }} which is above the 10% threshold"
+
+  - name: system_alerts
+    rules:
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes / process_virtual_memory_bytes > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is at {{ $value }}% of total available memory"
+
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total[5m]) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is at {{ $value }}% over the last 5 minutes"
+
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service is down"
+          description: "The microbiome classifier service is not responding"
+
+  - name: data_alerts
+    rules:
+      - alert: DataDriftDetected
+        expr: feature_drift_score > 0.3
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data drift detected"
+          description: "Feature drift score is {{ $value }} which is above the threshold"
+
+      - alert: UnbalancedPredictions
+        expr: abs(prediction_class_ratio - 0.5) > 0.3
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unbalanced predictions detected"
+          description: "Prediction class ratio is significantly skewed: {{ $value }}"
+
+      - alert: HighFeatureImportanceShift
+        expr: feature_importance_shift > 0.2
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Feature importance shift detected"
+          description: "Feature importance has shifted by {{ $value }} which is above the threshold" 

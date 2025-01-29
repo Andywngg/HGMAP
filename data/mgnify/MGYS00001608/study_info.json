@@ -1,0 +1,77 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00001608",
+    "attributes": {
+      "bioproject": "PRJEB9204",
+      "samples-count": 2,
+      "accession": "MGYS00001608",
+      "is-private": false,
+      "last-update": "2017-03-21T11:42:48",
+      "secondary-accession": "ERP010288",
+      "centre-name": "Marine Biological Laboratory",
+      "public-release-date": null,
+      "study-abstract": "Two new vent-systems on the Mid-Cayman Rise each exhibit novel geologic settings and distinctively hydrogen-rich vent fluid compositions.  We have determined and compared the chemistry, energy landscape, abundance, community composition, diversity, and function of microbes in venting fluids from both sites: Piccard, the world?s deepest vent site-site, hosted in mafic rocks, and Von Damm, an adjacent, ultramafic-influenced system.",
+      "study-name": "Subseafloor microbes at Mid-Cayman Rise",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608/publications"
+        }
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Environmental:Aquatic:Marine:Hydrothermal vents",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Aquatic:Marine:Hydrothermal%20vents"
+            }
+          }
+        ]
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608/studies"
+        },
+        "data": [
+          {
+            "type": "studies",
+            "id": "MGYS00002031",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002031"
+            }
+          }
+        ]
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608/geocoordinates"
+        }
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608/samples"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608/downloads"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001608"
+    }
+  }
+}

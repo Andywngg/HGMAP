@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00000992",
+    "attributes": {
+      "bioproject": "PRJNA254033",
+      "samples-count": 244,
+      "accession": "MGYS00000992",
+      "is-private": false,
+      "last-update": "2019-11-07T16:44:00",
+      "secondary-accession": "SRP044011",
+      "centre-name": "INRA",
+      "public-release-date": null,
+      "study-abstract": "The EU FP7 EcoFINDERS project, represents a large consortium of European partners, which brings together a range of expertise and knowledge of soil biodiversity and functioning. The main aims of the project are to characterise the biodiversity of European soils according to soil types, threats, climatic zones and land uses, and to decipher the links between soil biodiversity, functioning and ecosystem services.",
+      "study-name": "ECOFINDER LTO soil samples Metagenome",
+      "data-origination": "HARVESTED"
+    },
+    "relationships": {
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992/publications"
+        }
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Environmental:Terrestrial:Soil",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Terrestrial:Soil"
+            }
+          }
+        ]
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992/studies"
+        },
+        "data": []
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992/geocoordinates"
+        }
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992/samples"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992/downloads"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000992"
+    }
+  }
+}

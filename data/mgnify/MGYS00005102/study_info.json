@@ -1,0 +1,77 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00005102",
+    "attributes": {
+      "bioproject": "PRJEB26427",
+      "samples-count": 179,
+      "accession": "MGYS00005102",
+      "is-private": false,
+      "last-update": "2020-02-07T20:22:49",
+      "secondary-accession": "ERP108413",
+      "centre-name": "P&G Singapore Innovation Center",
+      "public-release-date": null,
+      "study-abstract": "Metagenomics samples of multiple skin sites (underarm, neck & head scalp) from teenagers and kids",
+      "study-name": "Understanding the microbial basis of body odor in teenagers and kids",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102/publications"
+        }
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Host-associated:Human:Skin",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Host-associated:Human:Skin"
+            }
+          }
+        ]
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102/studies"
+        },
+        "data": [
+          {
+            "type": "studies",
+            "id": "MGYS00005386",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005386"
+            }
+          }
+        ]
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102/geocoordinates"
+        }
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102/samples"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102/downloads"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00005102"
+    }
+  }
+}

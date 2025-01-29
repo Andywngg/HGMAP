@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00004773",
+    "attributes": {
+      "samples-count": 1,
+      "bioproject": "PRJEB29543",
+      "accession": "MGYS00004773",
+      "is-private": false,
+      "last-update": "2019-06-12T17:46:28",
+      "secondary-accession": "ERP111854",
+      "centre-name": "EMG",
+      "public-release-date": null,
+      "study-abstract": "The marine metagenome Third Party Annotation (TPA) assembly was derived from the primary whole genome shotgun (WGS) data set: PRJNA249643.  This project includes samples from the following biomes: Environmental, Aquatic, Marine, Intertidal zone, Oil-contaminated.",
+      "study-name": "EMG produced TPA metagenomics assembly of the Oil polluted marine microbial communities from Coal Oil Point, Santa Barbara, California, USA - Sample 3 Metagenome (marine metagenome) data set.",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773/geocoordinates"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773/studies"
+        },
+        "data": []
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Environmental:Aquatic:Marine:Intertidal zone:Oil-contaminated",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Aquatic:Marine:Intertidal%20zone:Oil-contaminated"
+            }
+          }
+        ]
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773/samples"
+        }
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773/analyses"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773/downloads"
+        }
+      },
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773/publications"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004773"
+    }
+  }
+}

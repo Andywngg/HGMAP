@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00001248",
+    "attributes": {
+      "accession": "MGYS00001248",
+      "samples-count": 270,
+      "bioproject": "PRJNA280026",
+      "is-private": false,
+      "last-update": "2019-11-07T16:52:43",
+      "secondary-accession": "SRP065497",
+      "centre-name": "The Chinese University of Hong Kong",
+      "public-release-date": null,
+      "study-abstract": "Here we associate microbial community membership with distinct phenotypes of colorectal lesion. By performing 16S rRNA gene sequencing on mucosal biopies obtained from colorectal cancer-free patients, patients with adenomatous polyps, and patients with adenocarcinomas, we characterized the taxonomic configurations of microbial community to examine how disease progression is associated with changes in microbial community types.",
+      "study-name": "Human gut environment Targeted loci environmental",
+      "data-origination": "HARVESTED"
+    },
+    "relationships": {
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248/samples"
+        }
+      },
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248/publications"
+        }
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248/geocoordinates"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248/downloads"
+        }
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248/studies"
+        },
+        "data": []
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Host-associated:Human:Digestive system:Large intestine",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Host-associated:Human:Digestive%20system:Large%20intestine"
+            }
+          }
+        ]
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001248"
+    }
+  }
+}

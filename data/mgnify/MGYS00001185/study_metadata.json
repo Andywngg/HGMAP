@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00001185",
+    "attributes": {
+      "bioproject": null,
+      "samples-count": 1,
+      "accession": "MGYS00001185",
+      "is-private": false,
+      "last-update": "2016-07-29T11:54:27",
+      "secondary-accession": "SRP012449",
+      "centre-name": "Shanghai Jiao Tong University School of Medicine",
+      "public-release-date": null,
+      "study-abstract": "Background. Amount of studies have suggested the relationship between the microbiota and the onset of diseases, especially some chronic diseases. An understanding of bacterial community in the sputum from patients has deeply recognized the pulmonary tuberculosis.   Methods. We enrolled 31 patients suffering from pulmonary tuberculosis and 24 healthy persons as the normal control, and then extracted the total DNA of sputum samples of pulmonary tuberculosis patients and respiratory secretions of normal person. 16S rDNA V3 hyper-variable regions were amplified using bar-coded primiers and pyro-sequenced using  Roche 454 FLX .   Results. All the sequences we get were analysed by tools in the Ribosomal Database Project. the amplicons were classified into 24 main phyla, there are 24 phylum in the pulmonary tuberculosis samples and 17 phylum in normal person. Microbiota changed in the sputum of pulmonary tuberculosis patients, and we can separate pulmonary tuberculosis patients from normal person through the respiratory microbial community. The microbial composition in the sputum of pulmonary tuberculosis patients is much more diversity than that in normal person(p<0.05). Furthermore, lots of foreign bacteria such as Stenotrophomonas, Cupriavidus, Pseudomonas, Thermus, Sphingomonas, Methylobacterium, Diaphorobacter, Comamonas and Mobilicoccus uniquely distributed in the pulmonary tuberculosis patients.   Conclusions. The study concludes that the respiratory tract microbial composition  in pulmonary tuberculosis become much more complicated than that in normal person. Besides, amount of foreign bacteria exist in the sputum of pulmonary tuberculosis patients. The role these foreign bacteria played in the onset or processing of pulmonary tuberculosis may need pay much more attention to.",
+      "study-name": "Complicated Sputum Microbial Composition in the Patients of Pulmonary Tuberculosis",
+      "data-origination": "HARVESTED"
+    },
+    "relationships": {
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185/publications"
+        }
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Host-associated:Human:Respiratory system:Pulmonary system:Sputum",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Host-associated:Human:Respiratory%20system:Pulmonary%20system:Sputum"
+            }
+          }
+        ]
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185/studies"
+        },
+        "data": []
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185/geocoordinates"
+        }
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185/samples"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185/downloads"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001185"
+    }
+  }
+}

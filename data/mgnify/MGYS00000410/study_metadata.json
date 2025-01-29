@@ -1,0 +1,119 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00000410",
+    "attributes": {
+      "samples-count": 136,
+      "bioproject": "PRJEB1787",
+      "accession": "MGYS00000410",
+      "is-private": false,
+      "last-update": "2016-01-20T14:12:06",
+      "secondary-accession": "ERP001736",
+      "centre-name": "GSC",
+      "public-release-date": null,
+      "study-abstract": "Seawater was filtered from different depths to retain small cell sizes (Bacteria Organisms). The DNA was extracted and submitted to high throughput sequencing.",
+      "study-name": "Shotgun Sequencing of Tara Oceans DNA samples corresponding to size fractions for  prokaryotes.",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410/geocoordinates"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410/studies"
+        },
+        "data": [
+          {
+            "type": "studies",
+            "id": "MGYS00000492",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000492"
+            }
+          },
+          {
+            "type": "studies",
+            "id": "MGYS00001482",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001482"
+            }
+          },
+          {
+            "type": "studies",
+            "id": "MGYS00002008",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002008"
+            }
+          },
+          {
+            "type": "studies",
+            "id": "MGYS00002392",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002392"
+            }
+          },
+          {
+            "type": "studies",
+            "id": "MGYS00006075",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00006075"
+            }
+          },
+          {
+            "type": "studies",
+            "id": "MGYS00006605",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00006605"
+            }
+          }
+        ]
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Environmental:Aquatic:Marine",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Aquatic:Marine"
+            }
+          },
+          {
+            "type": "biomes",
+            "id": "root:Environmental:Aquatic:Marine:Oceanic",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Aquatic:Marine:Oceanic"
+            }
+          }
+        ]
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410/samples"
+        }
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410/analyses"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410/downloads"
+        }
+      },
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410/publications"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000410"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'microbiome-classifier'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/metrics'
+    scheme: 'http'
+
+  - job_name: 'model-metrics'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/model-metrics'
+    scheme: 'http'
+
+rule_files:
+  - 'alert_rules.yml'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - 'alertmanager:9093' 

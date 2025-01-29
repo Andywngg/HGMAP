@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00004576",
+    "attributes": {
+      "samples-count": 1,
+      "accession": "MGYS00004576",
+      "bioproject": "PRJNA207483",
+      "is-private": false,
+      "last-update": "2019-11-07T16:25:43",
+      "secondary-accession": "SRP025133",
+      "centre-name": "Korea Institute of Ocean and Science and Technology",
+      "public-release-date": null,
+      "study-abstract": "To elucidate the seasonal and spatial changes in picocyanobacterial diversity in temperate waters, baccoded amplicon pyrosequencing of 16S-23S internal transcribed spacer sequences was applied.  Synechococcus and Prochlorococcus diversity in the East Sea and the East China Sea.",
+      "study-name": "Picocyanobacterial diversity in temperate marginal seas",
+      "data-origination": "HARVESTED"
+    },
+    "relationships": {
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Environmental:Aquatic:Marine",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Aquatic:Marine"
+            }
+          }
+        ]
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576/samples"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576/downloads"
+        }
+      },
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576/publications"
+        }
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576/geocoordinates"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576/studies"
+        },
+        "data": []
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576/analyses"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004576"
+    }
+  }
+}

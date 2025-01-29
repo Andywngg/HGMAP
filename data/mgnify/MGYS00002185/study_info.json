@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00002185",
+    "attributes": {
+      "samples-count": 1,
+      "bioproject": "PRJEB24660",
+      "accession": "MGYS00002185",
+      "is-private": false,
+      "last-update": "2018-02-01T09:27:26",
+      "secondary-accession": "ERP106503",
+      "centre-name": "SHANGHAI JIAO TONG UNIVERSITY",
+      "public-release-date": null,
+      "study-abstract": "metagenome",
+      "study-name": "metagenome",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185/geocoordinates"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185/studies"
+        },
+        "data": []
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Engineered",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Engineered"
+            }
+          }
+        ]
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185/samples"
+        }
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185/analyses"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185/downloads"
+        }
+      },
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185/publications"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002185"
+    }
+  }
+}

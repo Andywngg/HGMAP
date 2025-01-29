@@ -1,0 +1,97 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00000601",
+    "attributes": {
+      "bioproject": "PRJEB12431",
+      "samples-count": 248,
+      "accession": "MGYS00000601",
+      "is-private": false,
+      "last-update": "2016-02-03T10:02:09",
+      "secondary-accession": "ERP013908",
+      "centre-name": "Research Group for Genomic Epidemiology",
+      "public-release-date": null,
+      "study-abstract": "Will follow later.",
+      "study-name": "Assessment of Bacterial DNA Extraction Procedures for Metagenomic Sequencing Evaluated on Different Environmental Matrices.",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601/publications"
+        }
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Engineered:Modeled",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Engineered:Modeled"
+            }
+          },
+          {
+            "type": "biomes",
+            "id": "root:Engineered:Modeled:Simulated communities (microbial mixture)",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Engineered:Modeled:Simulated%20communities%20(microbial%20mixture)"
+            }
+          },
+          {
+            "type": "biomes",
+            "id": "root:Engineered:Wastewater",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Engineered:Wastewater"
+            }
+          },
+          {
+            "type": "biomes",
+            "id": "root:Host-associated:Human:Digestive system:Large intestine:Fecal",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Host-associated:Human:Digestive%20system:Large%20intestine:Fecal"
+            }
+          },
+          {
+            "type": "biomes",
+            "id": "root:Host-associated:Mammals:Digestive system:Fecal",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Host-associated:Mammals:Digestive%20system:Fecal"
+            }
+          }
+        ]
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601/studies"
+        },
+        "data": []
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601/geocoordinates"
+        }
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601/samples"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601/downloads"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000601"
+    }
+  }
+}

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en"
+      data-ng-controller="CoreController as corec"
+      data-ng-click="handleApplicationClick()"
+      tabindex="-1">
+<head>
+  <base href="/">
+
+  <meta charset="utf-8">
+  <link rel="icon" href="images/favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- facebook open graph tags -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://portal.hmpdacc.org/"/>
+  <meta property="og:title" content="Human Microbiome Project (HMP) Data Portal"/>
+  <meta property="og:description" content="The data portal for data generated from the Human Microbiome Project and Integrative Human Microbiome Project"/>
+ 
+<!-- twitter card tags -->
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:domain" value="portal.hmpdacc.org"/>
+  <meta name="twitter:title" value="Human Microbiome Project (HMP) Data Portal"/>
+  <meta name="twitter:description" value="The data portal for data generated from the Human Microbiome Project and Integrative Human Microbiome Project"/>
+  <meta name="twitter:url" value="https://portal.hmpdacc.org/"/>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title data-ng-bind="pageTitle"></title>
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="images/favicon-192x192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
+  <link rel="apple-touch-icon-precomposed" href="images/favicon-152x152.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/favicon-144x144.png">
+  <meta name="msapplication-TileColor" content="#3372DF">
+
+  <link rel="stylesheet" href="css/lib/angular-notify.min.css">
+  <link rel="stylesheet" href="css/lib/font-awesome.min.css">
+  <link rel="stylesheet" href="css/lib/ngprogress-lite.css">
+  <link rel="stylesheet" href="libs/xmldisplay/xmldisplay.css">
+  <link rel="stylesheet" href="css/lib/ng-tags-input.min.css">
+  <link rel="stylesheet" href="css/lib/ng-sortable.min.css"></link>
+  <link rel="stylesheet" href="css/lib/ng-table.min.css"></link>
+<!--  <link rel="stylesheet" href="css/lib/ng-sortable.style.min.css"></link>-->
+  <!-- build:css css/styles.css -->
+  <link rel="stylesheet" href="css/styles.min.css">
+  <!-- endbuild -->
+
+</head>
+
+<body>
+<a href="#skip" tabindex="1" class="skip-to-content" data-translate>Skip to Main Content</a>
+<!--
+<div class="alert alert-warning m-margin-bottom-0 ng-cloak" ng-if="config.apiIsMismatched">
+  <a onclick="window.location.reload()" href="#">
+    A newer version of this software is available. Click here to refresh the page. <i class="fa fa-lg fa-refresh"></i>
+  </a>
+</div>
+-->
+<div id="notification"></div>
+
+<div id="wrapper" aria-busy="true" aria-live="assertive">
+  <!--<div data-ng-if="!loaded || !modelLoaded" class="app-loading">-->
+    <!--<i class="fa fa-spinner fa-spin fa-5x" data-ng-click="cancelRequest()"></i>-->
+  <!--</div>-->
+
+  <div id="header">
+    <nga-header></nga-header>
+  </div>
+  <div banner class="banner banner-hidden"></div>
+
+  <noscript>
+    <style>
+      #loadingScreen { display: none; }
+    </style>
+    <div id="body" tabindex="0">
+      <header id="gdc-header" class="navbar navbar-default navbar-static-top" role="banner">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a id="gdc-logo" class="navbar-brand" data-ui-sref="home" data-translate="" tabindex="0" href="/">
+              <span class="ng-scope">{{ corec.config['site-wide']['project-abbr'] }} Data Portal</span>
+            </a>
+          </div>
+        </div>
+      </header>
+      <div class="container-fluid">
+        <div class="col-lg-8 col-lg-offset-2">
+          <div class="alert alert-info">
+            <div>
+              Javascript is required to use the features of this website.
+              Please enable Javascript and reload the page.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </noscript>
+
+  <div class="loading-overlay" ng-class="{ active: corec.loading }">
+    <div class="spinParticleContainer" ng-class="{ active: corec.loading5s }">
+      <div class="particle red"></div>
+      <div class="particle grey other-particle"></div>
+      <div class="particle blue other-other-particle"></div>
+    </div>
+  </div>
+<!--
+    <div class="loading-message" ng-class="{ active: corec.loading5s }">
+      <div>Loading, please wait...</div>
+      <div class="long-loading-message" ng-class="{ active: corec.loading8s }">
+        <div>We are experiencing longer than normal load times.</div>
+        <div>Please contact <a target="_blank" href="https://gdc.nci.nih.gov/support#gdc-help-desk">GDC Support</a> if the problem persists.</div>
+      </div>
+    </div>
+  </div>
+-->
+
+  <div id="skip" class="gdc-body" ng-class="{ lowered: corec.loweredBody }" data-ui-view role="main" tabindex="0"></div>
+
+  <!-- NCI Footer -->
+  <footer id="footer">
+    <div class="container" role="contentinfo">
+      <div>
+        Code for this website is provided by the <a href="https://gdc.cancer.gov/">NCI Genomic Data Commons (GDC)</a> which was developed by the University of Chicago and the Ontario Institute of Cancer Research (OICR).
+      </div>
+      <div class="ng-cloak">
+        <a href="{{corec.config['site-wide']['footer-link']}}" tabindex="0" target="_blank">
+            <span class="hidden-sm" >{{corec.config['site-wide']['footer-link-text']}}</span>
+        </a>
+      </div>
+      <div>
+        v<span>2.28.2</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- Deps -->
+<script src="js/lib/FileSaver.min.js"></script>
+<script src="js/lib/lodash.js"></script>
+<script src="js/lib/bowser.min.js"></script>
+<script src="js/lib/d3.min.js"></script>
+<script src="js/lib/d3-selection-multi.min.js"></script>
+<script src="js/lib/d3-transition.min.js"></script>
+<script src="js/lib/d3-v6-tip.min.js"></script>
+<script src="js/lib/jquery.min.js"></script>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/angular-cache.min.js"></script>
+<script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/angular-ui-router.min.js"></script>
+<script src="js/lib/ui-bootstrap-tpls.js"></script>
+<script src="js/lib/restangular.min.js"></script>
+<script src="js/lib/angular-gettext.min.js"></script>
+<script src="js/lib/angular-aria.min.js"></script>
+<script src="js/lib/ngprogress-lite.min.js"></script>
+<script src="js/lib/angular-sanitize.min.js"></script>
+<script src="js/lib/angular-notify.min.js"></script>
+<script src="js/lib/angular-cookies.min.js"></script>
+<script src="js/lib/angular-drag-and-drop-lists.min.js"></script>
+<script src="js/lib/ng-sortable.min.js"></script>
+<script src="js/lib/ng-table.min.js"></script>
+<script src="js/lib/ng-tags-input.min.js"></script>
+<script src="js/lib/he.js"></script>
+<script src="js/lib/colorbrewer.js"></script>
+<!-- endbuild -->
+
+<!-- App -->
+<script src="js/gql.min.js"></script>
+<script src="js/templates.min.js"></script>
+<script src="js/app.min.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>

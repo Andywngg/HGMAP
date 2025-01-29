@@ -1,89 +1,90 @@
-import os
-import logging
-from pathlib import Path
-import torch
-import numpy as np
-from config.constants import *
-from src.train_advanced import AdvancedTrainingPipeline
-from src.model.uncertainty import UncertaintyQuantifier
-from src.interpretation.explainer import AdvancedExplainer
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-def setup_logging():
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler('training.log'),
-            logging.StreamHandler()
-        ]
-    )
-    return logging.getLogger(__name__)
+import pandas as pd
+import numpy as np
+from pathlib import Path
+import logging
+from typing import Tuple, Dict, Any
+
+from features.engineer_features import MicrobiomeFeatureEngineer
+from training.train_advanced import MicrobiomeModelTrainer
+from evaluation.evaluate_model import ModelEvaluator
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def load_data(data_dir: str = 'data/mgnify') -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Load abundance and metadata from processed MGnify data."""
+    data_dir = Path(data_dir)
+    
+    # Load abundance data
+    abundance_df = pd.read_csv(data_dir / 'abundance.csv', index_col=0)
+    metadata_df = pd.read_csv(data_dir / 'metadata.csv', index_col=0)
+    
+    logger.info(f"Loaded abundance data with shape: {abundance_df.shape}")
+    logger.info(f"Loaded metadata with shape: {metadata_df.shape}")
+    
+    return abundance_df, metadata_df
+
+def prepare_labels(metadata_df: pd.DataFrame) -> Tuple[np.ndarray, list]:
+    """Prepare labels from metadata."""
+    # Extract health status
+    health_status = metadata_df['study_name'].apply(lambda x: 'healthy' if 'healthy' in x.lower() 
+                                                  else x.split('(')[-1].strip(')').strip())
+    
+    # Get unique labels
+    unique_labels = sorted(health_status.unique())
+    label_map = {label: i for i, label in enumerate(unique_labels)}
+    
+    # Convert to numeric labels
+    y = health_status.map(label_map).values
+    
+    logger.info(f"Prepared labels with {len(unique_labels)} classes: {unique_labels}")
+    return y, unique_labels
 
 def main():
-    logger = setup_logging()
-    logger.info("Starting advanced microbiome analysis pipeline")
+    """Main pipeline execution."""
+    # Create output directories
+    output_dirs = ['features', 'models', 'evaluation']
+    for dir_name in output_dirs:
+        Path(dir_name).mkdir(parents=True, exist_ok=True)
     
-    try:
-        # Initialize training pipeline
-        pipeline = AdvancedTrainingPipeline(
-            data_path=TAXONOMY_FILES["SupplementaryData1"],
-            source_data_paths=[TAXONOMY_FILES["SupplementaryData2"]],
-            device='cuda' if torch.cuda.is_available() else 'cpu'
-        )
-        
-        # Train model
-        logger.info("Training model...")
-        model, metrics = pipeline.run_pipeline()
-        
-        # Ensure all models have consistent input/output interfaces
-        assert all(hasattr(model, 'predict_proba') for model in pipeline.models.values())
-        assert all(hasattr(model, 'fit') for model in pipeline.models.values())
-        
-        # Uncertainty quantification
-        logger.info("Performing uncertainty quantification...")
-        uncertainty_quantifier = UncertaintyQuantifier(
-            model=model,
-            n_samples=50,
-            dropout_rate=0.3
-        )
-        
-        # Model interpretation
-        logger.info("Generating model explanations...")
-        explainer = AdvancedExplainer(
-            model=model,
-            feature_names=pipeline.feature_names
-        )
-        
-        # Save results
-        results_dir = Path("results")
-        results_dir.mkdir(exist_ok=True)
-        
-        # Save metrics
-        np.save(results_dir / "metrics.npy", metrics)
-        
-        # Save model
-        torch.save(model.state_dict(), results_dir / "model.pt")
-        
-        logger.info("Pipeline completed successfully!")
-        
-    except Exception as e:
-        logger.error(f"Error in pipeline: {str(e)}", exc_info=True)
-        raise
-
-def verify_data_pipeline(X):
-    # Preprocessing
-    X_preprocessed = preprocessor.fit_transform(X)
-    assert X_preprocessed.shape[0] == X.shape[0]
+    # Load data
+    logger.info("Loading data...")
+    abundance_df, metadata_df = load_data()
     
-    # Feature engineering
-    X_engineered = feature_engineer.fit_transform(X_preprocessed)
-    assert X_engineered.shape[0] == X.shape[0]
+    # Prepare labels
+    logger.info("Preparing labels...")
+    y, labels = prepare_labels(metadata_df)
     
-    # Feature selection
-    X_selected = feature_selector.fit_transform(X_engineered)
-    assert X_selected.shape[0] == X.shape[0]
+    # Engineer features
+    logger.info("Engineering features...")
+    feature_engineer = MicrobiomeFeatureEngineer(n_components=10)
+    X = feature_engineer.engineer_features(abundance_df, abundance_df.index)
+    feature_engineer.save_features(X)
     
-    return True
+    # Train model
+    logger.info("Training model...")
+    model_trainer = MicrobiomeModelTrainer()
+    results = model_trainer.train(X, y)
+    
+    # Log training results
+    logger.info("\nTraining Results:")
+    for metric, value in results.items():
+        logger.info(f"{metric}: {value:.4f}")
+    
+    # Save model
+    logger.info("Saving model...")
+    model_trainer.save_model()
+    
+    # Evaluate model
+    logger.info("Evaluating model...")
+    evaluator = ModelEvaluator()
+    eval_results = evaluator.evaluate(X, y, labels)
+    evaluator.save_results(eval_results)
+    
+    logger.info("Pipeline completed successfully!")
 
 if __name__ == "__main__":
     main() 

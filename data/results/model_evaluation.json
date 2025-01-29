@@ -1,0 +1,6 @@
+{
+    "accuracy_scores": {
+        "random_forest": 0.4,
+        "gradient_boosting": 0.4
+    }
+}

@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00002673",
+    "attributes": {
+      "bioproject": "PRJEB4489",
+      "samples-count": 93,
+      "accession": "MGYS00002673",
+      "is-private": false,
+      "last-update": "2018-07-27T09:09:39",
+      "secondary-accession": "ERP003782",
+      "centre-name": "CCME-COLORADO",
+      "public-release-date": null,
+      "study-abstract": "Mammals have diversified into many dietary niches. Specialized myrmecophagous (ant- and termite-eating) placental mammals represent a textbook example of evolutionary convergence driven by extreme diet specialization. Armadillos, anteaters, aardvarks, pangolins, and aardwolves thus provide a model system for understanding the potential role of gut microbiota in the convergent adaptation to myrmecophagy. Here, we expand upon previous mammalian gut microbiome studies by using high-throughput barcoded Illumina sequencing of the 16S rRNA gene to characterize the composition of gut microbiota in 15 species representing all placental myrmecophagous lineages and their close relatives from zoo- and field-collected samples. We confirm that both diet and phylogeny drive the evolution of mammalian gut microbiota, with cases of convergence in global composition, but also examples of phylogenetic inertia. Our results reveal specialized placental myrmecophages as a spectacular case of large-scale convergence in gut microbiome composition. Indeed, Neighbor-Net networks and beta diversity plots based on UniFrac distances show significant clustering of myrmecophagous species (anteaters, aardvarks, and aardwolves) even though they belong to phylogenetically distant lineages representing different orders. The aardwolf, which diverged from carnivorous hyenas only in the last 10 million years, experienced a convergent shift in the composition of its gut microbiome to become more similar to other myrmecophages. These results confirm diet adaptation to be a major driving factor of convergence in gut microbiome composition over evolutionary timescales. This study sets the scene for future metagenomic studies aiming at evaluating potential convergence in functional gene content in the microbiomes of specialized mammalian myrmecophages.",
+      "study-name": "Convergence of gut microbiomes in myrmecophagous mammals",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673/publications"
+        }
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Host-associated:Mammals:Digestive system:Fecal",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Host-associated:Mammals:Digestive%20system:Fecal"
+            }
+          }
+        ]
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673/studies"
+        },
+        "data": []
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673/geocoordinates"
+        }
+      },
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673/samples"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673/downloads"
+        }
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00002673"
+    }
+  }
+}
