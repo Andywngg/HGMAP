@@ -1,0 +1,105 @@
+# Data paths
+data:
+  input_dir: "data/raw"
+  processed_dir: "data/processed"
+  features_dir: "data/features"
+  models_dir: "models"
+  results_dir: "results"
+
+# Feature engineering parameters
+feature_engineering:
+  n_pca_components: 50
+  min_prevalence: 0.1
+  min_abundance: 0.001
+  taxonomy_levels:
+    - phylum
+    - class
+    - order
+    - family
+    - genus
+    - species
+  diversity_metrics:
+    - richness
+    - shannon_diversity
+    - simpson_diversity
+    - pielou_evenness
+    - berger_parker_dominance
+    - effective_species
+
+# Model parameters
+model:
+  n_folds: 5
+  random_state: 42
+  use_probabilities: true
+  base_models:
+    rf:
+      n_estimators: 500
+      max_depth: 15
+      min_samples_split: 5
+      min_samples_leaf: 2
+      class_weight: balanced
+    xgb:
+      n_estimators: 500
+      max_depth: 8
+      learning_rate: 0.01
+      subsample: 0.8
+      colsample_bytree: 0.8
+      min_child_weight: 3
+      scale_pos_weight: 1
+    lgb:
+      n_estimators: 500
+      num_leaves: 31
+      max_depth: 8
+      learning_rate: 0.01
+      subsample: 0.8
+      colsample_bytree: 0.8
+      min_child_samples: 20
+      class_weight: balanced
+    gb:
+      n_estimators: 500
+      max_depth: 8
+      learning_rate: 0.01
+      subsample: 0.8
+      min_samples_split: 5
+      min_samples_leaf: 2
+  meta_model:
+    n_estimators: 200
+    max_depth: 4
+    learning_rate: 0.01
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+# Training parameters
+training:
+  test_size: 0.2
+  cv_folds: 5
+  scoring: roc_auc
+  use_smote: true
+  smote_params:
+    k_neighbors: 5
+    random_state: 42
+
+# Evaluation metrics
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - auc_roc
+  threshold: 0.5
+
+# Visualization settings
+visualization:
+  feature_importance:
+    n_top_features: 20
+    figure_size: [12, 8]
+  shap:
+    max_display: 20
+    figure_size: [10, 6]
+
+# Logging configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/pipeline.log" 

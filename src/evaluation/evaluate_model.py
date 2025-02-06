@@ -9,11 +9,11 @@ from sklearn.metrics import (
     confusion_matrix, classification_report,
     roc_curve, auc, precision_recall_curve
 )
-import shap
 import joblib
 from pathlib import Path
 import logging
 from typing import Dict, Any, Tuple
+from src.data.processor_final import MicrobiomeProcessor
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -28,14 +28,13 @@ class ModelEvaluator:
     def load_model(self):
         """Load the trained model and scalers."""
         self.model = joblib.load(self.model_dir / 'best_model.joblib')
-        self.scalers = joblib.load(self.model_dir / 'scalers.joblib')
         
-        feature_importance = pd.read_csv(self.model_dir / 'feature_importance.csv')
-        self.feature_names = feature_importance['feature'].tolist()
-    
-    def prepare_data(self, X: pd.DataFrame) -> np.ndarray:
-        """Prepare data using saved scalers."""
-        return self.scalers['standard'].transform(X)
+        # Load feature names if available
+        try:
+            feature_importance = pd.read_csv(self.model_dir / 'feature_importance.csv')
+            self.feature_names = feature_importance['feature'].tolist()
+        except:
+            self.feature_names = None
     
     def plot_confusion_matrix(self, y_true: np.ndarray, y_pred: np.ndarray, 
                             labels: list = None, output_dir: str = 'evaluation'):
@@ -47,8 +46,8 @@ class ModelEvaluator:
         cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
         
         sns.heatmap(cm_norm, annot=cm, fmt='d', cmap='Blues',
-                   xticklabels=labels if labels else 'auto',
-                   yticklabels=labels if labels else 'auto')
+                   xticklabels=labels if labels else ['Healthy', 'Non-healthy'],
+                   yticklabels=labels if labels else ['Healthy', 'Non-healthy'])
         
         plt.title('Confusion Matrix')
         plt.xlabel('Predicted Label')
@@ -123,29 +122,35 @@ class ModelEvaluator:
         plt.close()
     
     def plot_feature_importance(self, X: pd.DataFrame, output_dir: str = 'evaluation'):
-        """Plot SHAP feature importance."""
-        explainer = shap.TreeExplainer(self.model)
-        shap_values = explainer.shap_values(X)
-        
-        plt.figure(figsize=(12, 8))
-        if isinstance(shap_values, list):  # Multi-class
-            shap.summary_plot(shap_values, X, plot_type="bar", show=False)
-        else:  # Binary
-            shap.summary_plot(shap_values, X, plot_type="bar", show=False)
-        
-        output_dir = Path(output_dir)
-        output_dir.mkdir(parents=True, exist_ok=True)
-        plt.savefig(output_dir / 'feature_importance.png')
-        plt.close()
+        """Plot feature importance from the base model."""
+        if hasattr(self.model, 'feature_importances_'):
+            importances = self.model.feature_importances_
+            feature_names = self.feature_names if self.feature_names else (
+                X.columns if isinstance(X, pd.DataFrame) else [f'Feature {i}' for i in range(X.shape[1])]
+            )
+            
+            plt.figure(figsize=(12, 8))
+            importance_df = pd.DataFrame({'feature': feature_names, 'importance': importances})
+            importance_df = importance_df.sort_values('importance', ascending=True)
+            
+            plt.barh(range(len(importance_df)), importance_df['importance'])
+            plt.yticks(range(len(importance_df)), importance_df['feature'])
+            plt.xlabel('Feature Importance')
+            plt.title('Feature Importance (Model-based)')
+            
+            output_dir = Path(output_dir)
+            output_dir.mkdir(parents=True, exist_ok=True)
+            plt.savefig(output_dir / 'feature_importance.png')
+            plt.close()
+            
+            # Save feature importance to CSV
+            importance_df.to_csv(output_dir / 'feature_importance.csv', index=False)
     
     def evaluate(self, X: pd.DataFrame, y: np.ndarray, labels: list = None) -> Dict[str, Any]:
         """Comprehensive model evaluation."""
-        # Prepare data
-        X_prepared = self.prepare_data(X)
-        
         # Get predictions
-        y_pred = self.model.predict(X_prepared)
-        y_pred_proba = self.model.predict_proba(X_prepared)
+        y_pred = self.model.predict(X)
+        y_pred_proba = self.model.predict_proba(X)
         
         # Generate classification report
         report = classification_report(y, y_pred, target_names=labels if labels else None)
@@ -177,4 +182,16 @@ class ModelEvaluator:
         
         # Save predictions and probabilities
         np.save(output_dir / 'predictions.npy', results['predictions'])
-        np.save(output_dir / 'probabilities.npy', results['probabilities']) 
+        np.save(output_dir / 'probabilities.npy', results['probabilities'])
+
+if __name__ == '__main__':
+    # Initialize data processor and get data
+    processor = MicrobiomeProcessor()
+    X, y = processor.prepare_data()
+    
+    # Initialize evaluator
+    evaluator = ModelEvaluator()
+    
+    # Run evaluation
+    results = evaluator.evaluate(X, y)
+    evaluator.save_results(results) 

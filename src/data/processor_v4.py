@@ -8,12 +8,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score, StratifiedKFold, GridSearchCV
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, make_scorer
-from sklearn.feature_selection import SelectFromModel, mutual_info_classif, SelectKBest
+from sklearn.feature_selection import SelectFromModel, mutual_info_classif, SelectKBest, RFE
 from xgboost import XGBClassifier
 import warnings
 import xgboost as xgb
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.utils.class_weight import compute_class_weight
+import lightgbm as lgb
 
 warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
@@ -181,7 +182,7 @@ class EnhancedMicrobiomeProcessor:
             X, y = self._load_and_preprocess(abundance_path, metadata_path)
             
             # Feature engineering and selection
-            X_selected = self._engineer_and_select_features(X)
+            X_engineered = self._engineer_and_select_features(X)
             
             # Compute class weights
             class_weights = compute_class_weight(
@@ -192,36 +193,48 @@ class EnhancedMicrobiomeProcessor:
             weight_dict = dict(zip(np.unique(y), class_weights))
             sample_weights = np.array([weight_dict[label] for label in y])
             
-            # Select features using mutual information
-            k = min(50, X_selected.shape[1])  # Select top 50 features or all if less
-            selector = SelectKBest(score_func=mutual_info_classif, k=k)
-            X_selected_mi = selector.fit_transform(X_selected, y)
-            selected_features = X_selected.columns[selector.get_support()].tolist()
-            X_selected = pd.DataFrame(X_selected_mi, columns=selected_features)
+            # Initialize a base model for RFE
+            base_estimator = RandomForestClassifier(
+                n_estimators=500,
+                max_depth=8,
+                random_state=42,
+                n_jobs=-1,
+                class_weight='balanced'
+            )
             
-            # Initialize XGBoost with optimized parameters
-            params = {
-                'max_depth': 8,
-                'learning_rate': 0.03,
-                'subsample': 0.85,
-                'colsample_bytree': 0.75,
-                'objective': 'binary:logistic',
-                'eval_metric': ['logloss', 'error', 'auc'],
-                'seed': 42,
-                'num_boost_round': 2000,
-                'tree_method': 'hist',
-                'grow_policy': 'lossguide',
-                'max_leaves': 128,
-                'min_child_weight': 3,
-                'gamma': 0.3,
-                'reg_alpha': 0.3,
-                'reg_lambda': 1.5,
-                'scale_pos_weight': 1.0,
-                'max_bin': 256,
-                'early_stopping_rounds': 100
-            }
+            # Perform Recursive Feature Elimination
+            n_features_to_select = min(50, X_engineered.shape[1])
+            rfe = RFE(
+                estimator=base_estimator,
+                n_features_to_select=n_features_to_select,
+                step=1
+            )
             
-            self.best_model = XGBoostWrapper(**params)
+            # Fit RFE
+            self.logger.info("Performing recursive feature elimination...")
+            X_rfe = rfe.fit_transform(X_engineered, y)
+            selected_features = X_engineered.columns[rfe.support_].tolist()
+            X_selected = pd.DataFrame(X_rfe, columns=selected_features)
+            
+            self.logger.info(f"Selected {len(selected_features)} features using RFE")
+            
+            # Further refine features using mutual information
+            selector = SelectKBest(score_func=mutual_info_classif, k='all')
+            selector.fit(X_selected, y)
+            mi_scores = selector.scores_
+            
+            # Keep features with MI score above mean
+            mi_threshold = np.mean(mi_scores)
+            selected_features_mi = [
+                feature for feature, score in zip(selected_features, mi_scores)
+                if score > mi_threshold
+            ]
+            X_selected = X_selected[selected_features_mi]
+            
+            self.logger.info(f"Selected {len(selected_features_mi)} features after mutual information filtering")
+            
+            # Initialize stacking model
+            self.best_model = StackingWrapper()
             
             # Perform cross-validation with stratification and sample weights
             cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
@@ -233,55 +246,46 @@ class EnhancedMicrobiomeProcessor:
                 w_train = sample_weights[train_idx]
                 
                 # Create a new model instance for each fold
-                model = XGBoostWrapper(**params)
-                
-                # Train on this fold
-                dtrain = xgb.DMatrix(X_train.values, label=y_train, weight=w_train)
-                dval = xgb.DMatrix(X_val.values, label=y_val)
-                evallist = [(dtrain, 'train'), (dval, 'eval')]
-                
-                model.model = xgb.train(
-                    model.params,
-                    dtrain,
-                    num_boost_round=model.num_boost_round,
-                    evals=evallist,
-                    early_stopping_rounds=model.early_stopping_rounds,
-                    verbose_eval=False
-                )
-                
-                # Evaluate on validation set
+                model = StackingWrapper()
+                model.fit(X_train.values, y_train, sample_weight=w_train)
                 scores.append(model.score(X_val.values, y_val))
             
             self.logger.info(f"Cross-validation accuracy: {np.mean(scores):.3f} (+/- {np.std(scores) * 2:.3f})")
             
             # Train final model on full dataset
-            dtrain_full = xgb.DMatrix(X_selected.values, label=y, weight=sample_weights)
-            self.best_model.model = xgb.train(
-                self.best_model.params,
-                dtrain_full,
-                num_boost_round=self.best_model.num_boost_round
-            )
+            self.best_model.fit(X_selected.values, y, sample_weight=sample_weights)
             
             # Calculate feature importance
-            feature_importance = pd.DataFrame({
-                'feature': X_selected.columns,
-                'importance': np.zeros(len(X_selected.columns))
-            })
+            importance_dict = self.best_model.get_feature_importance()
             
-            try:
-                importance_dict = self.best_model.model.get_score(importance_type='gain')
-                for feature_id, importance in importance_dict.items():
-                    idx = int(feature_id.replace('f', ''))
-                    if idx < len(feature_importance):
-                        feature_importance.loc[idx, 'importance'] = importance
-            except Exception as e:
-                self.logger.warning(f"Could not calculate feature importance: {str(e)}")
+            # Create feature importance DataFrame
+            feature_records = []
             
+            # Process feature importance for each model type
+            for model_type in ['xgb', 'rf', 'gb', 'lgb']:
+                for i, feature in enumerate(selected_features_mi):
+                    importance_key = f'{model_type}_{i}'
+                    if importance_key in importance_dict:
+                        feature_records.append({
+                            'feature': f'{model_type}_{feature}',
+                            'importance': importance_dict[importance_key]
+                        })
+            
+            # Add meta-learner importance
+            for meta_key in ['meta_xgb', 'meta_rf', 'meta_gb', 'meta_lgb']:
+                if meta_key in importance_dict:
+                    feature_records.append({
+                        'feature': meta_key,
+                        'importance': importance_dict[meta_key]
+                    })
+            
+            # Convert to DataFrame and sort
+            feature_importance = pd.DataFrame(feature_records)
             feature_importance = feature_importance.sort_values('importance', ascending=False)
             
             return {
                 'model': self.best_model,
-                'features': X_selected.columns.tolist(),
+                'features': selected_features_mi,
                 'cv_scores': scores,
                 'cv_mean': float(np.mean(scores)),
                 'cv_std': float(np.std(scores)),
@@ -511,3 +515,184 @@ class XGBoostWrapper(BaseEstimator):
             else:
                 self.params[param] = value
         return self 
+
+class StackingWrapper(BaseEstimator):
+    def __init__(self, **params):
+        # Initialize base models
+        self.xgb_model = XGBoostWrapper(
+            max_depth=8,
+            learning_rate=0.03,
+            subsample=0.85,
+            colsample_bytree=0.75,
+            num_boost_round=2000,
+            early_stopping_rounds=100,
+            tree_method='hist',
+            grow_policy='lossguide',
+            max_leaves=128,
+            min_child_weight=3,
+            gamma=0.3,
+            reg_alpha=0.3,
+            reg_lambda=1.5
+        )
+        
+        self.rf_model = RandomForestClassifier(
+            n_estimators=1000,
+            max_depth=15,
+            min_samples_split=5,
+            min_samples_leaf=2,
+            max_features='sqrt',
+            random_state=42,
+            n_jobs=-1,
+            class_weight='balanced'
+        )
+        
+        self.gb_model = GradientBoostingClassifier(
+            n_estimators=1000,
+            max_depth=8,
+            learning_rate=0.03,
+            subsample=0.85,
+            random_state=42,
+            validation_fraction=0.2,
+            n_iter_no_change=50,
+            tol=1e-4
+        )
+        
+        self.lgb_model = lgb.LGBMClassifier(
+            n_estimators=2000,
+            max_depth=8,
+            learning_rate=0.03,
+            subsample=0.85,
+            colsample_bytree=0.75,
+            random_state=42,
+            n_jobs=-1,
+            is_unbalance=True,
+            num_leaves=128,
+            min_child_samples=20,
+            reg_alpha=0.3,
+            reg_lambda=1.5,
+            metric='binary_logloss'
+        )
+        
+        # Initialize meta-learner
+        self.meta_learner = XGBoostWrapper(
+            max_depth=4,
+            learning_rate=0.01,
+            subsample=0.9,
+            colsample_bytree=0.8,
+            num_boost_round=1000,
+            early_stopping_rounds=50
+        )
+        
+        self.model = None
+        self._estimator_type = "classifier"
+        
+    def fit(self, X, y, sample_weight=None):
+        # Split data for stacking
+        from sklearn.model_selection import StratifiedKFold
+        cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+        
+        # Initialize meta-features array
+        meta_features = np.zeros((X.shape[0], 4))  # 4 base models
+        
+        # Train base models and create meta-features
+        for train_idx, val_idx in cv.split(X, y):
+            X_train, X_val = X[train_idx], X[val_idx]
+            y_train, y_val = y[train_idx], y[val_idx]
+            
+            # Train base models
+            if sample_weight is not None:
+                w_train = sample_weight[train_idx]
+                self.xgb_model.fit(X_train, y_train, sample_weight=w_train)
+                self.lgb_model.fit(X_train, y_train, sample_weight=w_train)
+            else:
+                self.xgb_model.fit(X_train, y_train)
+                self.lgb_model.fit(X_train, y_train)
+                
+            self.rf_model.fit(X_train, y_train)
+            self.gb_model.fit(X_train, y_train)
+            
+            # Create meta-features
+            meta_features[val_idx, 0] = self.xgb_model.predict_proba(X_val)[:, 1]
+            meta_features[val_idx, 1] = self.rf_model.predict_proba(X_val)[:, 1]
+            meta_features[val_idx, 2] = self.gb_model.predict_proba(X_val)[:, 1]
+            meta_features[val_idx, 3] = self.lgb_model.predict_proba(X_val)[:, 1]
+        
+        # Train meta-learner
+        if sample_weight is not None:
+            self.meta_learner.fit(meta_features, y, sample_weight=sample_weight)
+        else:
+            self.meta_learner.fit(meta_features, y)
+        
+        # Retrain base models on full dataset
+        if sample_weight is not None:
+            self.xgb_model.fit(X, y, sample_weight=sample_weight)
+            self.lgb_model.fit(X, y, sample_weight=sample_weight)
+        else:
+            self.xgb_model.fit(X, y)
+            self.lgb_model.fit(X, y)
+            
+        self.rf_model.fit(X, y)
+        self.gb_model.fit(X, y)
+        
+        return self
+        
+    def predict(self, X):
+        meta_features = np.column_stack([
+            self.xgb_model.predict_proba(X)[:, 1],
+            self.rf_model.predict_proba(X)[:, 1],
+            self.gb_model.predict_proba(X)[:, 1],
+            self.lgb_model.predict_proba(X)[:, 1]
+        ])
+        return self.meta_learner.predict(meta_features)
+        
+    def predict_proba(self, X):
+        meta_features = np.column_stack([
+            self.xgb_model.predict_proba(X)[:, 1],
+            self.rf_model.predict_proba(X)[:, 1],
+            self.gb_model.predict_proba(X)[:, 1],
+            self.lgb_model.predict_proba(X)[:, 1]
+        ])
+        return self.meta_learner.predict_proba(meta_features)
+        
+    def score(self, X, y):
+        return np.mean(self.predict(X) == y)
+        
+    def get_feature_importance(self):
+        # Combine feature importance from all models
+        importance_dict = {}
+        
+        # XGBoost importance
+        xgb_importance = self.xgb_model.model.get_score(importance_type='gain')
+        for feature_id, importance in xgb_importance.items():
+            idx = int(feature_id.replace('f', ''))
+            importance_dict[f'xgb_{idx}'] = importance
+        
+        # Random Forest importance
+        rf_importance = self.rf_model.feature_importances_
+        for i, importance in enumerate(rf_importance):
+            importance_dict[f'rf_{i}'] = importance * 100  # Scale to be comparable with XGBoost
+        
+        # Gradient Boosting importance
+        gb_importance = self.gb_model.feature_importances_
+        for i, importance in enumerate(gb_importance):
+            importance_dict[f'gb_{i}'] = importance * 100  # Scale to be comparable with XGBoost
+            
+        # LightGBM importance
+        lgb_importance = self.lgb_model.feature_importances_
+        for i, importance in enumerate(lgb_importance):
+            importance_dict[f'lgb_{i}'] = importance * 100  # Scale to be comparable with XGBoost
+        
+        # Meta-learner importance (how much each base model contributes)
+        meta_importance = self.meta_learner.model.get_score(importance_type='gain')
+        for feature_id, importance in meta_importance.items():
+            idx = int(feature_id.replace('f', ''))
+            if idx == 0:
+                importance_dict['meta_xgb'] = importance
+            elif idx == 1:
+                importance_dict['meta_rf'] = importance
+            elif idx == 2:
+                importance_dict['meta_gb'] = importance
+            else:
+                importance_dict['meta_lgb'] = importance
+            
+        return importance_dict 

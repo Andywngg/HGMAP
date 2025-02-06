@@ -1,0 +1,69 @@
+{
+  "data": {
+    "type": "studies",
+    "id": "MGYS00001578",
+    "attributes": {
+      "accession": "MGYS00001578",
+      "samples-count": 8,
+      "bioproject": "PRJEB7577",
+      "is-private": false,
+      "last-update": "2017-03-14T13:54:35",
+      "secondary-accession": "ERP008495",
+      "centre-name": "ALFRED WEGENER INSTITUTE FOR POLAR AND MARINE RESEARCH",
+      "public-release-date": null,
+      "study-abstract": "Sea ice is a large ecosystem contributing significantly to Polar primary productivity. Especially in the northern hemisphere sea ice consists of often several meters thick multi-year ice (MYI) and thinner first-year ice (FYI). Current global warming is most severe in Arctic regions and as a consequence sea ice cover, especially for MYI is decreasing. Despite its apparent hostile nature sea ice interior is inhabited by a microbial community of bacteria and protists, many of which are photosynthetic. The composition of these communities is yet not known in detail and the relation between active cells versus those just entrapped has not been studied. Here we present data on eukaryotic biodiversity in MYI and FYI from the Central Arctic Ocean using high-throughput sequencing of 18S rRNA and rDNA amplicons. By analyzing datasets from environmental DNA versus RNA we compare the DNA-based total biodiversity to that from RNA amplicons representing the more active part of the community. We found differences between these two in that Bacillariophyceae OTUs are over-represented in the active part of the community. The important arctic diatom Melosira arctica seems to be more abundant in MYI.",
+      "study-name": "RNA and DNA based biodiversity of sea ice protists over the central Arctic Ocean",
+      "data-origination": "SUBMITTED"
+    },
+    "relationships": {
+      "samples": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578/samples"
+        }
+      },
+      "publications": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578/publications"
+        }
+      },
+      "geocoordinates": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578/geocoordinates"
+        }
+      },
+      "downloads": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578/downloads"
+        }
+      },
+      "analyses": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578/analyses"
+        }
+      },
+      "studies": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578/studies"
+        },
+        "data": []
+      },
+      "biomes": {
+        "links": {
+          "related": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578/biomes"
+        },
+        "data": [
+          {
+            "type": "biomes",
+            "id": "root:Environmental:Aquatic:Marine:Oceanic",
+            "links": {
+              "self": "https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Aquatic:Marine:Oceanic"
+            }
+          }
+        ]
+      }
+    },
+    "links": {
+      "self": "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00001578"
+    }
+  }
+}

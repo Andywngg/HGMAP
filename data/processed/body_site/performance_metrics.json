@@ -1,0 +1,68 @@
+{
+  "accuracy": 0.43478260869565216,
+  "roc_auc": 0.46212121212121215,
+  "feature_importance": {
+    "feature": {
+      "785": "family_Desulfovibrionales_median",
+      "632": "order_Deltaproteobacteria_range",
+      "934": "genus_Barnesiellaceae_cv",
+      "993": "genus_Desulfovibrionaceae_median",
+      "439": "abundance_150",
+      "788": "family_Desulfovibrionales_ratio",
+      "1105": "genus_Prevotellaceae_cv",
+      "996": "genus_Desulfovibrionaceae_ratio",
+      "897": "genus_Acidaminococcaceae_range",
+      "990": "genus_Desulfovibrionaceae_sum",
+      "782": "family_Desulfovibrionales_sum",
+      "305": "abundance_robust_zscore_104",
+      "236": "abundance_80",
+      "1214": "species_Anaerofilum_ratio",
+      "931": "genus_Barnesiellaceae_std",
+      "436": "abundance_149",
+      "1204": "species_Anaerococcus_sum",
+      "991": "genus_Desulfovibrionaceae_mean",
+      "440": "abundance_robust_zscore_150",
+      "708": "family_Acidaminococcales_range"
+    },
+    "importance": {
+      "785": 0.006404799054198575,
+      "632": 0.006189784064017687,
+      "934": 0.005564829604504993,
+      "993": 0.004890618740291561,
+      "439": 0.004748214519367714,
+      "788": 0.004702065874900271,
+      "1105": 0.004692277032905504,
+      "996": 0.004542788530243827,
+      "897": 0.004458401985547548,
+      "990": 0.004375791511659655,
+      "782": 0.004254953349662742,
+      "305": 0.004230046182169151,
+      "236": 0.004117782025019804,
+      "1214": 0.004010437055519207,
+      "931": 0.003859248101589947,
+      "436": 0.003822900466009082,
+      "1204": 0.0038124179477418553,
+      "991": 0.003761197864117051,
+      "440": 0.003741725354117144,
+      "708": 0.003690162187493419
+    }
+  },
+  "model_accuracies": {
+    "rf1": 0.391304347826087,
+    "rf2": 0.34782608695652173,
+    "xgb": 0.34782608695652173,
+    "lgb": 0.43478260869565216
+  },
+  "model_weights": {
+    "rf1": 0.2507270461154965,
+    "rf2": 0.25467386788533447,
+    "xgb": 0.24719567926879937,
+    "lgb": 0.24740340673036976
+  },
+  "cv_scores": {
+    "rf1": 0.7058479532163743,
+    "rf2": 0.7169590643274854,
+    "xgb": 0.695906432748538,
+    "lgb": 0.6964912280701754
+  }
+}

@@ -1,148 +1,221 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
-import pandas as pd
+from typing import List, Dict, Any, Optional
 import numpy as np
+import pandas as pd
 import joblib
 from pathlib import Path
 import logging
+import json
+from src.data.processor_final import MicrobiomeProcessor
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-
-# Initialize FastAPI app
 app = FastAPI(
-    title="Microbiome Health Analysis API",
-    description="API for predicting health status based on microbiome data",
+    title="Microbiome Analysis API",
+    description="API for microbiome analysis and disease prediction",
     version="1.0.0"
 )
 
-# Define input data model
-class MicrobiomeData(BaseModel):
-    shannon_diversity: float
-    species_richness: float
-    evenness: float
-    abundance_data: dict[str, float]
+# Initialize logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-class HealthPrediction(BaseModel):
-    prediction: str
+# Load the trained model
+try:
+    model = joblib.load("data/results/best_model.joblib")
+    with open("data/results/model_evaluation.json", "r") as f:
+        model_metrics = json.load(f)
+except Exception as e:
+    logger.error(f"Error loading model: {str(e)}")
+    model = None
+    model_metrics = None
+
+class PredictionInput(BaseModel):
+    """Input data schema for predictions"""
+    features: Dict[str, float]
+    sample_id: Optional[str] = None
+
+class PredictionResponse(BaseModel):
+    """Response schema for predictions"""
+    sample_id: Optional[str]
+    prediction: int
     probability: float
-    model_used: str
-
-class ModelArtifacts:
-    def __init__(self):
-        self.models_dir = Path("models")
-        self.load_artifacts()
-    
-    def load_artifacts(self):
-        """Load all necessary model artifacts."""
-        try:
-            # Load models
-            self.rf_model = joblib.load(self.models_dir / "random_forest_model.joblib")
-            self.gb_model = joblib.load(self.models_dir / "gradient_boosting_model.joblib")
-            self.stacking_model = joblib.load(self.models_dir / "stacking_model.joblib")
-            
-            # Load scaler
-            self.scaler = joblib.load(self.models_dir / "scaler.joblib")
-            
-            # Load feature names
-            self.feature_names = pd.read_csv(self.models_dir / "feature_names.csv")['feature_name'].tolist()
-            
-            logging.info("Model artifacts loaded successfully")
-        except Exception as e:
-            logging.error(f"Error loading model artifacts: {str(e)}")
-            raise RuntimeError("Failed to load model artifacts")
-
-# Initialize model artifacts
-artifacts = ModelArtifacts()
+    prediction_explanation: Dict[str, Any]
 
 @app.get("/")
 async def root():
-    """Root endpoint with API information."""
+    """Root endpoint with API information"""
     return {
-        "message": "Microbiome Health Analysis API",
+        "message": "Welcome to the Microbiome Analysis API",
         "version": "1.0.0",
         "endpoints": {
-            "/predict": "POST - Make health predictions",
-            "/models/info": "GET - Get model information"
+            "/predict": "Make predictions on new samples",
+            "/metrics": "Get model performance metrics",
+            "/visualizations": "Get model visualization files",
+            "/model-info": "Get detailed model information"
         }
     }
 
-@app.get("/models/info")
-async def model_info():
-    """Get information about the available models."""
-    return {
-        "models": [
-            {
-                "name": "Random Forest",
-                "features": len(artifacts.feature_names),
-                "type": "Ensemble"
-            },
-            {
-                "name": "Gradient Boosting",
-                "features": len(artifacts.feature_names),
-                "type": "Ensemble"
-            },
-            {
-                "name": "Stacking Classifier",
-                "features": len(artifacts.feature_names),
-                "type": "Meta-Ensemble"
-            }
-        ],
-        "features": artifacts.feature_names
-    }
-
-@app.post("/predict", response_model=HealthPrediction)
-async def predict(data: MicrobiomeData):
-    """Make health predictions based on microbiome data."""
-    try:
-        # Prepare feature vector
-        features = []
-        
-        # Add diversity metrics
-        features.extend([
-            data.shannon_diversity,
-            data.species_richness,
-            data.evenness
-        ])
-        
-        # Add PCA components (zeros for now, as we need the full pipeline to compute them)
-        features.extend([0] * 50)  # Placeholder for PCA components
-        
-        # Convert to numpy array and reshape
-        X = np.array(features).reshape(1, -1)
-        
-        # Scale features
-        X_scaled = artifacts.scaler.transform(X)
-        
-        # Make predictions with all models
-        rf_pred = artifacts.rf_model.predict_proba(X_scaled)[0]
-        gb_pred = artifacts.gb_model.predict_proba(X_scaled)[0]
-        stack_pred = artifacts.stacking_model.predict_proba(X_scaled)[0]
-        
-        # Use the model with highest confidence
-        predictions = [
-            ("Random Forest", rf_pred),
-            ("Gradient Boosting", gb_pred),
-            ("Stacking Classifier", stack_pred)
-        ]
-        
-        # Select model with highest confidence
-        model_name, probs = max(predictions, key=lambda x: max(x[1]))
-        prediction = "Non-healthy" if probs[1] > 0.5 else "Healthy"
-        probability = max(probs)
-        
-        return HealthPrediction(
-            prediction=prediction,
-            probability=float(probability),
-            model_used=model_name
-        )
+@app.post("/predict", response_model=PredictionResponse)
+async def predict(input_data: PredictionInput):
+    """Make predictions on new samples
     
+    Args:
+        input_data: Input features for prediction
+        
+    Returns:
+        Prediction results with probability and explanation
+    """
+    try:
+        if model is None:
+            raise HTTPException(status_code=500, detail="Model not loaded")
+            
+        # Convert input features to DataFrame
+        features_df = pd.DataFrame([input_data.features])
+        
+        # Make prediction
+        prediction = int(model.predict(features_df)[0])
+        probability = float(model.predict_proba(features_df)[0][1])
+        
+        # Get feature importance for explanation
+        if hasattr(model, 'named_estimators_'):
+            rf_model = model.named_estimators_['rf']
+        else:
+            rf_model = model
+            
+        importance = dict(zip(
+            features_df.columns,
+            rf_model.feature_importances_
+        ))
+        
+        # Sort features by importance
+        sorted_features = dict(sorted(
+            importance.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )[:5])
+        
+        return PredictionResponse(
+            sample_id=input_data.sample_id,
+            prediction=prediction,
+            probability=probability,
+            prediction_explanation={
+                "top_features": sorted_features,
+                "interpretation": "These features had the strongest influence on the prediction"
+            }
+        )
+        
     except Exception as e:
-        logging.error(f"Prediction error: {str(e)}")
+        logger.error(f"Error making prediction: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/metrics")
+async def get_metrics():
+    """Get comprehensive model performance metrics"""
+    try:
+        if model_metrics is None:
+            raise HTTPException(status_code=500, detail="Model metrics not loaded")
+            
+        return JSONResponse(content={
+            "performance_metrics": {
+                "accuracy": model_metrics["metrics"]["accuracy"],
+                "roc_auc": model_metrics["metrics"]["roc_auc"],
+                "precision": model_metrics["metrics"]["precision"],
+                "recall": model_metrics["metrics"]["recall"],
+                "f1": model_metrics["metrics"]["f1"]
+            },
+            "cross_validation": {
+                "mean_score": model_metrics["mean_cv_score"],
+                "std_score": model_metrics["std_cv_score"],
+                "cv_scores": model_metrics["cv_scores"]
+            },
+            "classification_report": model_metrics["classification_report"]
+        })
+        
+    except Exception as e:
+        logger.error(f"Error getting metrics: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/visualizations")
+async def get_visualizations():
+    """Get available model visualization files"""
+    try:
+        results_dir = Path("data/results")
+        visualization_files = {
+            "confusion_matrix": str(results_dir / "confusion_matrix.png"),
+            "feature_importance": str(results_dir / "feature_importance.png")
+        }
+        
+        # Check if files exist
+        available_files = {}
+        for name, path in visualization_files.items():
+            if Path(path).exists():
+                available_files[name] = f"/visualization/{name}"
+                
+        return JSONResponse(content={
+            "available_visualizations": available_files,
+            "message": "Use the specific visualization endpoints to download the files"
+        })
+        
+    except Exception as e:
+        logger.error(f"Error getting visualizations: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/visualization/{viz_name}")
+async def get_visualization(viz_name: str):
+    """Get a specific visualization file
+    
+    Args:
+        viz_name: Name of the visualization file
+        
+    Returns:
+        The visualization file
+    """
+    try:
+        viz_path = Path(f"data/results/{viz_name}.png")
+        if not viz_path.exists():
+            raise HTTPException(
+                status_code=404,
+                detail=f"Visualization {viz_name} not found"
+            )
+            
+        return FileResponse(
+            str(viz_path),
+            media_type="image/png",
+            filename=f"{viz_name}.png"
+        )
+        
+    except Exception as e:
+        logger.error(f"Error getting visualization: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/model-info")
+async def get_model_info():
+    """Get detailed model information"""
+    try:
+        if model_metrics is None:
+            raise HTTPException(status_code=500, detail="Model information not loaded")
+            
+        return JSONResponse(content={
+            "model_parameters": model_metrics["best_params"],
+            "feature_importance": model_metrics["feature_importance"],
+            "dataset_info": {
+                "n_samples": model_metrics["n_samples"],
+                "n_features": model_metrics["n_features"]
+            },
+            "performance_summary": {
+                "best_score": model_metrics["best_score"],
+                "cross_validation": {
+                    "mean": model_metrics["mean_cv_score"],
+                    "std": model_metrics["std_cv_score"]
+                }
+            }
+        })
+        
+    except Exception as e:
+        logger.error(f"Error getting model info: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000) 
+    uvicorn.run(app, host="0.0.0.0", port=8000)

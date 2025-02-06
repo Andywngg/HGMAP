@@ -1,94 +1,94 @@
-sample_id	health_status
-ERS339379	Healthy
-ERS339380	Healthy
-ERS339381	Healthy
-ERS339382	Healthy
-ERS339383	Healthy
-ERS339384	Healthy
-ERS339385	Healthy
-ERS339386	Healthy
-ERS339387	Healthy
-ERS339388	Healthy
-ERS339389	Healthy
-ERS339390	Healthy
-ERS339391	Healthy
-ERS339392	Healthy
-ERS339393	Healthy
-ERS339394	Healthy
-ERS339395	Healthy
-ERS339396	Healthy
-ERS339397	Healthy
-ERS339398	Healthy
-ERS339399	Healthy
-ERS339400	Healthy
-ERS339401	Healthy
-ERS339402	Healthy
-ERS339403	Healthy
-ERS339404	Healthy
-ERS339405	Healthy
-ERS339406	Healthy
-ERS339407	Healthy
-ERS339408	Healthy
-ERS339409	Healthy
-ERS339410	Healthy
-ERS339411	Healthy
-ERS339412	Healthy
-ERS339413	Healthy
-ERS339414	Healthy
-ERS339415	Healthy
-ERS339416	Healthy
-ERS339417	Healthy
-ERS339418	Healthy
-ERS339419	Healthy
-ERS339420	Healthy
-ERS339421	Healthy
-ERS339422	Healthy
-ERS339423	Healthy
-ERS339424	Healthy
-ERS339425	Healthy
-ERS339426	Healthy
-ERS339427	Healthy
-ERS339428	Healthy
-ERS339429	Healthy
-ERS339430	Healthy
-ERS339431	Healthy
-ERS339432	Healthy
-ERS339433	Healthy
-ERS339434	Healthy
-ERS339435	Healthy
-ERS339436	Healthy
-ERS339437	Healthy
-ERS339438	Healthy
-ERS339439	Healthy
-ERS339440	Healthy
-ERS339441	Healthy
-ERS339442	Healthy
-ERS339443	Healthy
-ERS339444	Healthy
-ERS339445	Healthy
-ERS339446	Healthy
-ERS339447	Healthy
-ERS339448	Healthy
-ERS339449	Healthy
-ERS339450	Healthy
-ERS339451	Healthy
-ERS339452	Healthy
-ERS339453	Healthy
-ERS339454	Healthy
-ERS339455	Healthy
-ERS339456	Healthy
-ERS339457	Healthy
-ERS339458	Healthy
-ERS339459	Healthy
-ERS339460	Healthy
-ERS339461	Healthy
-ERS339462	Healthy
-ERS339463	Healthy
-ERS339464	Healthy
-ERS339465	Healthy
-ERS339466	Healthy
-ERS339467	Healthy
-ERS339468	Healthy
-ERS339469	Healthy
-ERS339470	Healthy
-ERS339471	Healthy
+sample_id	biosample	collection_date	environment_biome	environment_feature	environment_material	host_tax_id	host_scientific_name	geographic_location_(longitude)	geographic_location_(country_and/or_sea,region)	environment_(biome)	environment_(feature)	environment_(material)	altitude	depth	elevation	host_common_name	geographic_location_(latitude)	instrument_model
+ERS339379	SAMEA2171439	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339380	SAMEA2171440	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339381	SAMEA2171441	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339382	SAMEA2171442	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Tolypeutes matacus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Southern three-banded armadillo	39.167	unspecified
+ERS339383	SAMEA2171443	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339384	SAMEA2171444	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Priodontes maximus	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant armadillo	-18.12126	unspecified
+ERS339385	SAMEA2171445	2012-01-19	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	3.883	GAZ:France	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	89.0	Giant anteater	43.6	unspecified
+ERS339386	SAMEA2171446	2012-03-08	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Tamandua tetradactyla tetradactyla	-117.07	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	72.0	Southern tamandua	32.78	unspecified
+ERS339387	SAMEA2171447	2012-10-05	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	3.883	GAZ:France	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	89.0	Giant anteater	43.6	unspecified
+ERS339388	SAMEA2171448	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339389	SAMEA2171449	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Tamandua tetradactyla tetradactyla	-117.07	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	72.0	Southern tamandua	32.78	unspecified
+ERS339390	SAMEA2171450	2012-01-01/2012-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Choloepus hoffmanni	-84.38798	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	319.0	Hoffmann&apos;s two-toed sloth	33.749	unspecified
+ERS339391	SAMEA2171451	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339392	SAMEA2171452	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339393	SAMEA2171453	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339394	SAMEA2171454	2012-06-23	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339395	SAMEA2171455	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339396	SAMEA2171456	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339397	SAMEA2171457	2012-03-08	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Choloepus didactylus	-117.07	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	72.0	Linnaeus two-toed Sloth	32.78	unspecified
+ERS339398	SAMEA2171458	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339399	SAMEA2171459	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339400	SAMEA2171460	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Proteles cristatus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Aardwolf	39.167	unspecified
+ERS339401	SAMEA2171461	2012-01-01/2012-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Choloepus hoffmanni	-84.38798	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	319.0	Hoffmann&apos;s two-toed sloth	33.749	unspecified
+ERS339402	SAMEA2171462	2012-10-05	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Euphractus sexcinctus	3.883	GAZ:France	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	89.0	Six-banded armadillo	43.6	unspecified
+ERS339403	SAMEA2171463	2012-08-19	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	-0.167	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	79.0	Aardvark	51.5	unspecified
+ERS339404	SAMEA2171464	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339405	SAMEA2171465	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Proteles cristatus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Aardwolf	39.167	unspecified
+ERS339406	SAMEA2171466	2012-01-01/2012-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Choloepus hoffmanni	-95.36939	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	14.0	Hoffmann&apos;s two-toed sloth	29.76019	unspecified
+ERS339407	SAMEA2171467	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Tolypeutes matacus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Southern three-banded armadillo	39.167	unspecified
+ERS339408	SAMEA2171468	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Priodontes maximus	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant armadillo	-18.12126	unspecified
+ERS339409	SAMEA2171469	2012-01-01/2012-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Choloepus hoffmanni	-84.38798	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	319.0	Hoffmann&apos;s two-toed sloth	33.749	unspecified
+ERS339410	SAMEA2171470	2012-10-05	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Euphractus sexcinctus	3.883	GAZ:France	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	89.0	Six-banded armadillo	43.6	unspecified
+ERS339411	SAMEA2171471	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339412	SAMEA2171472	2012-08-17	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	-0.167	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	79.0	Aardvark	51.5	unspecified
+ERS339413	SAMEA2171473	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339414	SAMEA2171474	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339415	SAMEA2171475	2012-04-07	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Manis pentadactyla	12.417	GAZ:Germany	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	361.0	Chinese pangolin	51.333	unspecified
+ERS339416	SAMEA2171476	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339417	SAMEA2171477	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339418	SAMEA2171478	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339419	SAMEA2171479	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339420	SAMEA2171480	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339421	SAMEA2171481	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339422	SAMEA2171482	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339423	SAMEA2171483	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339424	SAMEA2171484	2012-10-05	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	3.883	GAZ:France	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	89.0	Giant anteater	43.6	unspecified
+ERS339425	SAMEA2171485	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339426	SAMEA2171486	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339427	SAMEA2171487	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Aardvark	39.167	unspecified
+ERS339428	SAMEA2171488	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339429	SAMEA2171489	2012-06-25	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339430	SAMEA2171490	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339431	SAMEA2171491	2012-04-08	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Choloepus didactylus	-117.07	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	72.0	Linnaeus two-toed Sloth	32.78	unspecified
+ERS339432	SAMEA2171492	2012-06-24	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339433	SAMEA2171493	2009-01-02	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Zaedyus pichiy	-68.867	GAZ:Argentina	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2449.0	Pichi armadillo	-32.8	unspecified
+ERS339434	SAMEA2171494	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Chaetophractus vellerosus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Screaming hairy armadillo	39.167	unspecified
+ERS339435	SAMEA2171495	2008-06-11	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Zaedyus pichiy	-68.867	GAZ:Argentina	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2449.0	Pichi armadillo	-32.8	unspecified
+ERS339436	SAMEA2171496	2012-08-17	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Euphractus sexcinctus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Six-banded armadillo	39.167	unspecified
+ERS339437	SAMEA2171497	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Chaetophractus vellerosus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Screaming hairy armadillo	39.167	unspecified
+ERS339438	SAMEA2171498	2012-04-07	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Manis pentadactyla	12.417	GAZ:Germany	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	361.0	Chinese pangolin	51.333	unspecified
+ERS339439	SAMEA2171499	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339440	SAMEA2171500	2012-06-23	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339441	SAMEA2171501	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339442	SAMEA2171502	2012-08-14	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Aardvark	39.167	unspecified
+ERS339443	SAMEA2171503	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Tolypeutes matacus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Southern three-banded armadillo	39.167	unspecified
+ERS339444	SAMEA2171504	2012-06-24	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339445	SAMEA2171505	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339446	SAMEA2171506	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339447	SAMEA2171507	2012-06-23	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339448	SAMEA2171508	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Priodontes maximus	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant armadillo	-18.12126	unspecified
+ERS339449	SAMEA2171509	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339450	SAMEA2171510	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339451	SAMEA2171511	2012-03-08	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Choloepus didactylus	-117.07	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	72.0	Linnaeus two-toed Sloth	32.78	unspecified
+ERS339452	SAMEA2171512	2012-03-08	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Melursus ursinus inornatus	-117.07	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	72.0	Sri Lankan sloth bear	32.78	unspecified
+ERS339453	SAMEA2171513	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339454	SAMEA2171514	2012-06-23	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339455	SAMEA2171515	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339456	SAMEA2171516	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339457	SAMEA2171517	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Priodontes maximus	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant armadillo	-18.12126	unspecified
+ERS339458	SAMEA2171518	2012-10-03	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Dasypus novemcinctus	-80.666664	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	3.0	Nine-banded armadillo	28.516666	unspecified
+ERS339459	SAMEA2171519	2012-10-05	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	3.883	GAZ:France	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	89.0	Giant anteater	43.6	unspecified
+ERS339460	SAMEA2171520	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339461	SAMEA2171521	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339462	SAMEA2171522	2012-06-25	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339463	SAMEA2171523	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339464	SAMEA2171524	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant anteater	-18.12126	unspecified
+ERS339465	SAMEA2171525	2009-09-17	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Chlamyphorus truncatus	-68.867	GAZ:Argentina	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2449.0	Pink fairy armadillo	-32.8	unspecified
+ERS339466	SAMEA2171526	2012-10-05	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Myrmecophaga tridactyla	3.883	GAZ:France	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	89.0	Giant anteater	43.6	unspecified
+ERS339467	SAMEA2171527	2012-08-17	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Euphractus sexcinctus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Six-banded armadillo	39.167	unspecified
+ERS339468	SAMEA2171528	2012-06-25	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	0.891874	GAZ:United Kingdom	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	16.0	Aardvark	51.89592	unspecified
+ERS339469	SAMEA2171529	2012-08-16	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Chaetophractus vellerosus	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Screaming hairy armadillo	39.167	unspecified
+ERS339470	SAMEA2171530	2012-08-14	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Orycteropus afer	-84.5	GAZ:United States of America	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	482.0	Aardvark	39.167	unspecified
+ERS339471	SAMEA2171531	2006-01-01/2006-12-31	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	40674	Priodontes maximus	-52.90845	GAZ:Brazil	ENVO:animal-associated habitat	ENVO:animal-associated habitat	ENVO:feces	0.0	0.0	2677.0	Giant armadillo	-18.12126	unspecified

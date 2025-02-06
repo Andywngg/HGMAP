@@ -172,9 +172,9 @@ If you use this project in your research, please cite:
 
 ```bibtex
 @software{microbiome_classifier,
-  author = {Your Name},
+    author = {Your Name},
   title = {Microbiome Health Status Classifier},
-  year = {2024},
+    year = {2024},
   publisher = {GitHub},
   url = {https://github.com/yourusername/microbiome-classifier}
 }

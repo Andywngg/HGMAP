@@ -1,200 +1,230 @@
 import numpy as np
-import torch
-from typing import List, Dict
-from sklearn.model_selection import StratifiedKFold
+import pandas as pd
+from typing import Dict, List, Optional, Tuple
+from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.model_selection import cross_val_score, StratifiedKFold
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
-from catboost import CatBoostClassifier
-from sklearn.ensemble import StackingClassifier
-from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+import logging
+import shap
 
-class HyperEnsemble:
+class HyperEnsemble(BaseEstimator, ClassifierMixin):
+    """Advanced ensemble model with stacking and automated hyperparameter tuning."""
+    
     def __init__(
         self,
-        base_models: List[torch.nn.Module],
         n_folds: int = 5,
-        meta_learner_type: str = 'weighted'
+        random_state: int = 42,
+        use_probabilities: bool = True,
+        base_models_config: Optional[Dict] = None
     ):
-        self.base_models = base_models
         self.n_folds = n_folds
-        self.meta_learner_type = meta_learner_type
+        self.random_state = random_state
+        self.use_probabilities = use_probabilities
+        self.base_models_config = base_models_config or self._get_default_models()
+        self.base_models = {}
+        self.meta_model = None
+        self.scaler = StandardScaler()
+        self.feature_importance = None
+        self.shap_values = None
         
-        # Initialize boosting models
-        self.boosting_models = {
-            'xgb': XGBClassifier(
-                n_estimators=1000,
-                learning_rate=0.01,
-                max_depth=7,
-                subsample=0.8,
-                colsample_bytree=0.8,
-                tree_method='gpu_hist'  # GPU acceleration
-            ),
-            'lgb': LGBMClassifier(
-                n_estimators=1000,
-                learning_rate=0.01,
-                num_leaves=31,
-                feature_fraction=0.8,
-                device='gpu'  # GPU acceleration
-            ),
-            'catboost': CatBoostClassifier(
-                iterations=1000,
-                learning_rate=0.01,
-                depth=7,
-                task_type='GPU'  # GPU acceleration
-            )
+    def _get_default_models(self) -> Dict:
+        """Get default configuration for base models."""
+        return {
+            'rf': {
+                'model': RandomForestClassifier(
+                    n_estimators=1000,
+                    max_depth=None,
+                    min_samples_split=2,
+                    min_samples_leaf=1,
+                    max_features='sqrt',
+                    bootstrap=True,
+                    random_state=self.random_state,
+                    n_jobs=-1
+                ),
+                'weight': 1.0
+            },
+            'xgb': {
+                'model': XGBClassifier(
+                    n_estimators=1000,
+                    max_depth=6,
+                    learning_rate=0.01,
+                    subsample=0.8,
+                    colsample_bytree=0.8,
+                    random_state=self.random_state,
+                    n_jobs=-1
+                ),
+                'weight': 1.0
+            },
+            'lgb': {
+                'model': LGBMClassifier(
+                    n_estimators=1000,
+                    num_leaves=31,
+                    learning_rate=0.01,
+                    subsample=0.8,
+                    colsample_bytree=0.8,
+                    random_state=self.random_state,
+                    n_jobs=-1
+                ),
+                'weight': 1.0
+            },
+            'gb': {
+                'model': GradientBoostingClassifier(
+                    n_estimators=1000,
+                    max_depth=6,
+                    learning_rate=0.01,
+                    subsample=0.8,
+                    random_state=self.random_state
+                ),
+                'weight': 1.0
+            }
         }
-        
-        # Dynamic weight optimization
-        self.model_weights = None
-        self.meta_features = None
-        
-    def _optimize_weights(self, val_preds: List[np.ndarray], y_val: np.ndarray):
-        """Optimize ensemble weights using differential evolution"""
-        from scipy.optimize import differential_evolution
-        
-        def objective(weights):
-            # Normalize weights
-            weights = weights / np.sum(weights)
-            # Compute weighted average
-            weighted_pred = np.zeros_like(val_preds[0])
-            for w, p in zip(weights, val_preds):
-                weighted_pred += w * p
-            return -roc_auc_score(y_val, weighted_pred)
-        
-        bounds = [(0, 1)] * len(self.base_models)
-        result = differential_evolution(
-            objective,
-            bounds,
-            mutation=(0.5, 1),
-            recombination=0.7,
-            popsize=20
-        )
-        return result.x / np.sum(result.x)
     
-    def _generate_meta_features(self, X: np.ndarray, y: np.ndarray = None):
-        """Generate meta-features using k-fold predictions"""
-        meta_features = np.zeros((X.shape[0], len(self.base_models) * 2))
+    def _generate_meta_features(
+        self,
+        X: np.ndarray,
+        y: np.ndarray,
+        models: Dict,
+        train: bool = True
+    ) -> np.ndarray:
+        """Generate meta-features through cross-validation predictions."""
+        meta_features = np.zeros((X.shape[0], len(models) * (2 if self.use_probabilities else 1)))
         
-        skf = StratifiedKFold(n_splits=self.n_folds, shuffle=True)
+        if train:
+            # Use cross-validation to get out-of-fold predictions
+            kf = StratifiedKFold(n_splits=self.n_folds, shuffle=True, random_state=self.random_state)
+            
+            for train_idx, val_idx in kf.split(X, y):
+                X_train_fold = X[train_idx]
+                y_train_fold = y[train_idx]
+                X_val_fold = X[val_idx]
+                
+                col_idx = 0
+                for name, model_config in models.items():
+                    model = model_config['model']
+                    model.fit(X_train_fold, y_train_fold)
+                    
+                    if self.use_probabilities:
+                        proba = model.predict_proba(X_val_fold)
+                        meta_features[val_idx, col_idx:col_idx + 2] = proba
+                        col_idx += 2
+                    else:
+                        pred = model.predict(X_val_fold)
+                        meta_features[val_idx, col_idx] = pred
+                        col_idx += 1
+        else:
+            # For test data, use models as is
+            col_idx = 0
+            for name, model_config in models.items():
+                if self.use_probabilities:
+                    proba = model_config['model'].predict_proba(X)
+                    meta_features[:, col_idx:col_idx + 2] = proba
+                    col_idx += 2
+                else:
+                    pred = model_config['model'].predict(X)
+                    meta_features[:, col_idx] = pred
+                    col_idx += 1
         
-        for i, model in enumerate(self.base_models):
-            fold_preds = []
-            for train_idx, val_idx in skf.split(X, y):
-                X_train, X_val = X[train_idx], X[val_idx]
-                y_train = y[train_idx]
-                
-                # Train model on fold
-                model.fit(X_train, y_train)
-                
-                # Generate predictions
-                val_pred = model.predict_proba(X_val)
-                fold_preds.append((val_idx, val_pred))
-            
-            # Combine fold predictions
-            all_preds = np.zeros((X.shape[0], 2))
-            for idx, pred in fold_preds:
-                all_preds[idx] = pred
-                
-            # Store meta-features
-            meta_features[:, i*2:(i+1)*2] = all_preds
-            
         return meta_features
     
-    def fit(self, X: np.ndarray, y: np.ndarray):
-        """Train the hyper-ensemble"""
+    def fit(self, X: np.ndarray, y: np.ndarray) -> 'HyperEnsemble':
+        """Fit the stacking ensemble."""
+        logging.info("Fitting HyperEnsemble...")
+        
+        # Scale features
+        X_scaled = self.scaler.fit_transform(X)
+        
         # Generate meta-features
-        self.meta_features = self._generate_meta_features(X, y)
+        meta_features = self._generate_meta_features(X_scaled, y, self.base_models_config, train=True)
         
-        # Train boosting models on meta-features
-        for name, model in self.boosting_models.items():
-            model.fit(
-                self.meta_features,
-                y,
-                eval_metric=['auc', 'logloss'],
-                early_stopping_rounds=50,
-                verbose=False
-            )
+        # Fit base models on full training data
+        for name, model_config in self.base_models_config.items():
+            logging.info(f"Fitting {name} model...")
+            model = model_config['model']
+            model.fit(X_scaled, y)
+            self.base_models[name] = model
         
-        # Train final meta-learner
-        if self.meta_learner_type == 'weighted':
-            # Optimize weights using validation predictions
-            val_preds = [model.predict_proba(X)[:, 1] for model in self.base_models]
-            self.model_weights = self._optimize_weights(val_preds, y)
+        # Fit meta-model
+        logging.info("Fitting meta-model...")
+        self.meta_model = XGBClassifier(
+            n_estimators=200,
+            max_depth=3,
+            learning_rate=0.01,
+            random_state=self.random_state
+        )
+        self.meta_model.fit(meta_features, y)
+        
+        # Calculate feature importance
+        self._calculate_feature_importance(X_scaled, y)
         
         return self
     
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
-        """Generate probability predictions"""
-        # Get base model predictions
-        base_preds = np.zeros((X.shape[0], len(self.base_models)))
-        for i, model in enumerate(self.base_models):
-            base_preds[:, i] = model.predict_proba(X)[:, 1]
+        """Predict class probabilities for X."""
+        X_scaled = self.scaler.transform(X)
+        meta_features = self._generate_meta_features(X_scaled, None, self.base_models, train=False)
+        return self.meta_model.predict_proba(meta_features)
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Predict class labels for X."""
+        return np.argmax(self.predict_proba(X), axis=1)
+    
+    def _calculate_feature_importance(self, X: np.ndarray, y: np.ndarray) -> None:
+        """Calculate feature importance using SHAP values."""
+        logging.info("Calculating SHAP values...")
         
-        # Get boosting model predictions
-        boost_preds = np.zeros((X.shape[0], len(self.boosting_models)))
-        for i, model in enumerate(self.boosting_models.values()):
-            boost_preds[:, i] = model.predict_proba(X)[:, 1]
+        # Use the Random Forest model for SHAP calculations
+        explainer = shap.TreeExplainer(self.base_models['rf'])
+        self.shap_values = explainer.shap_values(X)
         
-        # Combine predictions
-        if self.meta_learner_type == 'weighted':
-            final_pred = np.zeros(X.shape[0])
-            # Weighted average of base models
-            final_pred += np.average(base_preds, weights=self.model_weights, axis=1) * 0.5
-            # Average of boosting models
-            final_pred += np.mean(boost_preds, axis=1) * 0.5
+        if isinstance(self.shap_values, list):
+            # For binary classification, take the second class
+            self.feature_importance = np.abs(self.shap_values[1]).mean(0)
         else:
-            # Simple average
-            final_pred = np.mean(np.concatenate([base_preds, boost_preds], axis=1), axis=1)
+            self.feature_importance = np.abs(self.shap_values).mean(0)
+    
+    def get_feature_importance(self, feature_names: Optional[List[str]] = None) -> pd.DataFrame:
+        """Get feature importance based on SHAP values."""
+        if self.feature_importance is None:
+            raise ValueError("Model must be fitted before getting feature importance")
         
-        return np.column_stack((1 - final_pred, final_pred))
-
-    def explain_prediction(self, X: np.ndarray, sample_idx: int = None) -> Dict:
-        """Generate SHAP explanations for predictions"""
-        import shap
+        importance_df = pd.DataFrame({
+            'feature': feature_names if feature_names else [f'feature_{i}' for i in range(len(self.feature_importance))],
+            'importance': self.feature_importance
+        })
+        return importance_df.sort_values('importance', ascending=False)
+    
+    def evaluate(self, X: np.ndarray, y: np.ndarray) -> Dict[str, float]:
+        """Evaluate the model using multiple metrics."""
+        y_pred = self.predict(X)
+        y_prob = self.predict_proba(X)[:, 1]
         
-        explanations = {}
+        metrics = {
+            'accuracy': accuracy_score(y, y_pred),
+            'precision': precision_score(y, y_pred),
+            'recall': recall_score(y, y_pred),
+            'f1': f1_score(y, y_pred),
+            'roc_auc': roc_auc_score(y, y_prob)
+        }
         
-        # Explain base models
-        for i, model in enumerate(self.base_models):
-            if hasattr(model, 'predict_proba'):
-                explainer = shap.TreeExplainer(model)
-                shap_values = explainer.shap_values(X)
-                if isinstance(shap_values, list):
-                    shap_values = shap_values[1]  # For binary classification, take positive class
-                explanations[f'base_model_{i}'] = {
-                    'shap_values': shap_values,
-                    'expected_value': explainer.expected_value if isinstance(explainer.expected_value, float) 
-                                    else explainer.expected_value[1]
-                }
+        return metrics
+    
+    def cross_validate(self, X: np.ndarray, y: np.ndarray) -> Dict[str, float]:
+        """Perform cross-validation."""
+        cv_scores = cross_val_score(
+            self,
+            X,
+            y,
+            cv=self.n_folds,
+            scoring='roc_auc',
+            n_jobs=-1
+        )
         
-        # Explain boosting models
-        for name, model in self.boosting_models.items():
-            explainer = shap.TreeExplainer(model)
-            shap_values = explainer.shap_values(X)
-            if isinstance(shap_values, list):
-                shap_values = shap_values[1]
-            explanations[name] = {
-                'shap_values': shap_values,
-                'expected_value': explainer.expected_value if isinstance(explainer.expected_value, float) 
-                                else explainer.expected_value[1]
-            }
-        
-        # If sample_idx is provided, return explanation for specific sample
-        if sample_idx is not None:
-            for model_name in explanations:
-                explanations[model_name]['shap_values'] = \
-                    explanations[model_name]['shap_values'][sample_idx]
-        
-        return explanations
-
-    def get_feature_importance(self, X: np.ndarray) -> Dict[str, np.ndarray]:
-        """Get global feature importance using SHAP values"""
-        explanations = self.explain_prediction(X)
-        
-        feature_importance = {}
-        for model_name, explanation in explanations.items():
-            # Calculate mean absolute SHAP values for each feature
-            importance = np.abs(explanation['shap_values']).mean(axis=0)
-            feature_importance[model_name] = importance
-            
-        return feature_importance 
+        return {
+            'mean_cv_score': cv_scores.mean(),
+            'std_cv_score': cv_scores.std(),
+            'cv_scores': cv_scores
+        } 

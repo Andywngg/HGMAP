@@ -143,7 +143,7 @@ async def predict(data: MicrobiomeData):
             feature_importance=feature_importance,
             prediction_explanation=explanation
         )
-        
+    
     except Exception as e:
         logger.error(f"Error in prediction: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
