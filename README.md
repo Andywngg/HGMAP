@@ -171,12 +171,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 If you use this project in your research, please cite:
 
 ```bibtex
-@software{microbiome_classifier,
-    author = {Your Name},
+@software{HGMAP,
+    author = Andy Wang,
   title = {Microbiome Health Status Classifier},
-    year = {2024},
+    year = 2024,
   publisher = {GitHub},
-  url = {https://github.com/yourusername/microbiome-classifier}
+  url = {https://github.com/andywngg/HGMAP}
 }
 ```
 
